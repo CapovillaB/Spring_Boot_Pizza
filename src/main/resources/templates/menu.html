@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-container">
+        <div th:each="registro : ${registros}" class="card">
+            <h2 th:text="${registro.titulo}"></h2>
+            <p th:text="${registro.descricao}"></p>
+        </div>
+    </div>
+</body>
+</html>

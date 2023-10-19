@@ -1,5 +1,7 @@
 package com.pizzaria.sis_pedido.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +28,17 @@ public class PedidoController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    /*@Autowired
+    private ItensRepository itensRepository;*/ //  CRIAR!!
 
-    @GetMapping
-    public ModelAndView paginaUsuarios() {
+
+    @GetMapping("/menu")
+    public ModelAndView mostrarMenu() {
+        List<Item> registros = itensRepository.findAll(); // CRIAR ITENS!!!
         ModelAndView modelAndView = new ModelAndView("menu");
+        modelAndView.addObject(registros);
         return modelAndView;
     }
-
 
    
 }

@@ -14,5 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     
     List<Usuario> findByNome(String nome);
     List<Usuario> findByNomeAndPswd(String nome, String pswd);
-    // Você pode adicionar métodos de consulta personalizados aqui, se necessário
+    
 }

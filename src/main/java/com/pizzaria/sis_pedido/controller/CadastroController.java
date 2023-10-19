@@ -53,6 +53,6 @@ public class CadastroController {
 
         // Mais ações, redirecionamentos, etc., se necessário.
 
-        return "sucesso"; // Página de sucesso
+        return "redirect:/logar"; // Página de sucesso
     }
 }

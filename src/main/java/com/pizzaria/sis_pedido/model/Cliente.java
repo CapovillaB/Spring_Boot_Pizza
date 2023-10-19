@@ -1,0 +1,49 @@
+package com.pizzaria.sis_pedido.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "cliente")
+public class Cliente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
+    private int idCliente;
+
+    @Column(name = "id_usuario")
+    private int usuarioId;
+
+    @Column(name = "cliente_nome")
+    private String clienteNome;
+
+    @Column(name = "cliente_cpf")
+    private String clienteCPF;
+
+    @Column(name = "cliente_end")
+    private String clienteEnd;
+
+    @Column(name = "cliente_email")
+    private String clienteEmail;
+
+    @Column(name = "cliente_tel")
+    private String clienteTel;
+
+
+    public Cliente(String clienteNome, String clienteCPF, String clienteEnd, String clienteEmail, String clienteTel) {
+        this.clienteNome = clienteNome;
+        this.clienteCPF = clienteCPF;
+        this.clienteEnd = clienteEnd;
+        this.clienteEmail = clienteEmail;
+        this.clienteTel = clienteTel;
+    }
+
+
+    
+}

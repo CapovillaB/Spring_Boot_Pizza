@@ -14,8 +14,8 @@ import com.pizzaria.sis_pedido.repository.UsuarioRepository;
 
 
 @Controller
-@RequestMapping("/usuarios")
-public class UsuarioController {
+@RequestMapping("/logar")
+public class LogarController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -36,7 +36,7 @@ public class UsuarioController {
             usuarioLogado.setLogged(true);
             return "redirect:/pedidos";
         } else {
-            return "redirect:/usuarios";
+            return "redirect:/logar";
         }
     }
 

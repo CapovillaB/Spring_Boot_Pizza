@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+</head>
+<body>
+    <h1>Usuário</h1>
+    <form th:action="@{/cadastro}" method="post">
+
+        <!-- Dados do Usuário -->
+        Usuário:<br>
+        <input type="text" name="nomeUsuario" required><br>
+        Senha:<br>
+        <input type="password" name="pswdUsuario" required><br>
+
+        <!-- Dados do Cliente -->
+        Nome do Cliente:<br>
+        <input type="text" name="clienteNome" required><br>
+        CPF do Cliente:<br>
+        <input type="number" name="clienteCPF" required><br>
+        Endereço do Cliente:<br>
+        <input type="text" name="clienteEnd" required><br>
+        Email do Cliente:<br>
+        <input type="text" name="clienteEmail" required><br>
+        Telefone do Cliente:<br>
+        <input type="number" name="clienteTel" ><br><br>
+
+        <button type="submit">Cadastrar</button>
+        <button type="button" onclick="location.href='login'">Cancelar</button>
+    </form>
+    
+</body>
+</html>

@@ -1,9 +1,11 @@
 package com.pizzaria.sis_pedido.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +14,8 @@ import com.pizzaria.sis_pedido.model.entity.Cliente;
 import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.repository.ClienteRepository;
 import com.pizzaria.sis_pedido.model.repository.UsuarioRepository;
+import com.pizzaria.sis_pedido.model.service.ClienteService;
+import com.pizzaria.sis_pedido.model.service.UsuarioService;
 
 
 @Controller
@@ -19,40 +23,34 @@ import com.pizzaria.sis_pedido.model.repository.UsuarioRepository;
 public class CadastroController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
 
     @GetMapping
-    public ModelAndView paginaUsuarios() {
+    public ModelAndView paginaCadastro() {
         ModelAndView modelAndView = new ModelAndView("cadastro");
         return modelAndView;
     }
 
 
     @PostMapping
-    public String processarFormulario(
-            @RequestParam String nomeUsuario,
-            @RequestParam String pswdUsuario,
-            @RequestParam String clienteNome,
-            @RequestParam String clienteCPF,
-            @RequestParam String clienteEnd,
-            @RequestParam String clienteEmail,
-            @RequestParam String clienteTel) {
+    public String processarCadastro(@RequestBody Cliente newCliente) {
 
-        // Criar e salvar instância de Usuario
-        Usuario usuario = new Usuario(nomeUsuario, pswdUsuario);
-        usuarioRepository.save(usuario);
+        try {
+            usuarioService.criarUsuario(newCliente.getUsuario());
+            clienteService.criarCliente(newCliente);
 
-        // Criar e salvar instância de Cliente
-        Cliente cliente = new Cliente(clienteNome, clienteCPF, clienteEnd, clienteEmail, clienteTel);
-        cliente.setUsuarioId(usuario.getId()); // Associar o cliente ao usuário
-        clienteRepository.save(cliente);
+            return "redirect:/logar";
 
-        // Mais ações, redirecionamentos, etc., se necessário.
+            
+        } catch (Exception e) {
+            return ("Erro Interno ao salvar Usuario: " + e.getMessage());
+        }
 
-        return "redirect:/logar"; // Página de sucesso
     }
+
+    
 }

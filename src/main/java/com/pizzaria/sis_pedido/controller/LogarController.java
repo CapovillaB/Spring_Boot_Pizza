@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaria.sis_pedido.model.entity.Usuario;
-import com.pizzaria.sis_pedido.repository.UsuarioRepository;
-import com.pizzaria.sis_pedido.service.UsuarioService;
+import com.pizzaria.sis_pedido.model.repository.UsuarioRepository;
+import com.pizzaria.sis_pedido.model.service.UsuarioService;
 
 
 @Controller
@@ -34,8 +34,7 @@ public class LogarController {
     @PostMapping
     public ResponseEntity<?> logarUsuario(@ModelAttribute Usuario usuario) {
         try { 
-            
-             return (usuarioService.Logar(usuario));
+            return (usuarioService.Logar(usuario));
             
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro Interno em logar Usuario: " + e.getMessage());

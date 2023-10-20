@@ -17,6 +17,7 @@ import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.repository.ClienteRepository;
 import com.pizzaria.sis_pedido.model.repository.ItemRepository;
 import com.pizzaria.sis_pedido.model.repository.PedidoRepository;
+import com.pizzaria.sis_pedido.model.service.ItemService;
 
 
 
@@ -31,17 +32,27 @@ public class PedidoController {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
 
     @GetMapping
     public ModelAndView mostrarMenu() {
-        List<Item> registros = itemRepository.findAll();
+    
         ModelAndView modelAndView = new ModelAndView("menu");
-        modelAndView.addObject("registros", registros);
+        List<Item> registrosP = itemService.buscarTodasPizzas();
+        modelAndView.addObject("registrosP", registrosP);
+    
+        List<Item> registrosB = itemService.buscarTodasBebidas();
+        modelAndView.addObject("registrosB", registrosB);
+
         return modelAndView;
     }
 
 
    
 }
+
+/* criar metodos de lista de pedido com adição de itens
+ * criar metodo de salvar pedido
+ * criar método de cancelar pedido
+ */

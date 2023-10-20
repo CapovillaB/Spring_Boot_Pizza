@@ -29,4 +29,17 @@ public class UsuarioService {
 
 
     }
+
+    public ResponseEntity<?> criarUsuario(Usuario usuario) {
+        try {
+            usuarioRepository.save(usuario);
+            return new ResponseEntity<String>("redirect:/logar",HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("redirect:/logar");
+            
+        }
+        
+    }
 }

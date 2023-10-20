@@ -37,6 +37,9 @@ public class Cliente {
     @Column(name = "cliente_tel")
     private String clienteTel;
 
+    @Transient
+    private Usuario usuario;
+
 
     public Cliente(String clienteNome, String clienteCPF, String clienteEnd, String clienteEmail, String clienteTel) {
         this.clienteNome = clienteNome;

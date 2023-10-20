@@ -17,19 +17,19 @@ public class Item {
     
     @Id
     @Column(name = "id_item", updatable = false)
-    private int IdItem;
+    private int idItem;
 
     @Column(name = "item_nome", updatable = false)
-    private String NomeItem;
+    private String nomeItem;
 
     @Column(name = "item_desc", updatable = false)
-    private String DescItem;
+    private String descItem;
 
     @Column(name = "item_price", updatable = false)
-    private float PriceItem;
+    private float priceItem;
 
     @Column(name = "item_tipo", updatable = false)
-    private String TipoItem;
+    private String tipoItem;
 
 
     

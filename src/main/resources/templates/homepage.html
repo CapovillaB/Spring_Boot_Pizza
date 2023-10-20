@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
     <link rel="stylesheet" href="style.css">
+    <title>Document</title>
 </head>
 <body>
+    <h1>Pizzaria Louvadeus</h1>
+    <p>Bem vindo!!!</p>
+
+    <a href='cadastro'>Cadastre-se!</a>
+    <a href='logar'>Logar!</a>
+    <a href='pedido'>Vamos pedir!!!</a>
+
+    <h3>Nosso Menu!!!</h3>
+
+    <h4>Pizzas</h4>
     <div class="grid-container">
         <div th:each="item : ${registrosP}" class="card">
             <h2 th:text="${item.nomeItem}"></h2>
@@ -14,6 +24,8 @@
             <p th:text="${item.priceItem}"></p>
         </div>
     </div>
+
+    <h4>Bebidas</h4>
     <div class="grid-container">
         <div th:each="item : ${registrosB}" class="card">
             <h2 th:text="${item.nomeItem}"></h2>
@@ -21,9 +33,6 @@
             <p th:text="${item.priceItem}"></p>
         </div>
     </div>
+    
 </body>
 </html>
-
-<!-- criar divisão para lista de pedidos
-    criar lista de pedidos com campo para quantidades
-     criar botores de pedir e cancelar-->

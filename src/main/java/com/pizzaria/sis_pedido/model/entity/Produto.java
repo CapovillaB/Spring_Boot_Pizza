@@ -1,4 +1,4 @@
-package com.pizzaria.sis_pedido.Model;
+package com.pizzaria.sis_pedido.model.entity;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;

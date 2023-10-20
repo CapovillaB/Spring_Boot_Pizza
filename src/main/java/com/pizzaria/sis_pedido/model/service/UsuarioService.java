@@ -1,4 +1,4 @@
-package com.pizzaria.sis_pedido.service;
+package com.pizzaria.sis_pedido.model.service;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.pizzaria.sis_pedido.model.Usuario;
-import com.pizzaria.sis_pedido.repository.UsuarioRepository;
+import com.pizzaria.sis_pedido.model.entity.Usuario;
+import com.pizzaria.sis_pedido.model.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {

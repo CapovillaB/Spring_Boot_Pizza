@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaria.sis_pedido.model.Cliente;
+import com.pizzaria.sis_pedido.model.Item;
 import com.pizzaria.sis_pedido.model.Usuario;
 import com.pizzaria.sis_pedido.model.Pedido;
 import com.pizzaria.sis_pedido.repository.ClienteRepository;
+import com.pizzaria.sis_pedido.repository.ItemRepository;
 import com.pizzaria.sis_pedido.repository.PedidoRepository;
 
 
@@ -28,15 +30,15 @@ public class PedidoController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    /*@Autowired
-    private ItensRepository itensRepository;*/ //  CRIAR!!
+    @Autowired
+    private ItemRepository itemRepository;
 
 
-    @GetMapping("/menu")
+    @GetMapping
     public ModelAndView mostrarMenu() {
-        List<Item> registros = itensRepository.findAll(); // CRIAR ITENS!!!
+        List<Item> registros = itemRepository.findAll();
         ModelAndView modelAndView = new ModelAndView("menu");
-        modelAndView.addObject(registros);
+        modelAndView.addObject("registros", registros);
         return modelAndView;
     }
 

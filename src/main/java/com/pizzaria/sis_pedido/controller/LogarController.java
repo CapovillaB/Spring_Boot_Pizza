@@ -5,12 +5,15 @@ package com.pizzaria.sis_pedido.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaria.sis_pedido.model.Usuario;
 import com.pizzaria.sis_pedido.repository.UsuarioRepository;
+import com.pizzaria.sis_pedido.service.UsuarioService;
 
 
 @Controller
@@ -18,7 +21,7 @@ import com.pizzaria.sis_pedido.repository.UsuarioRepository;
 public class LogarController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    UsuarioService usuarioService;
 
     @GetMapping
     public ModelAndView paginaUsuarios() {
@@ -29,14 +32,13 @@ public class LogarController {
 
 
     @PostMapping
-    public String logarUsuario(@ModelAttribute Usuario usuario) {
-        List<Usuario> usuarios = usuarioRepository.findByNomeAndPswd(usuario.getNome(), usuario.getPswd());
-        if (!usuarios.isEmpty()) {
-            Usuario usuarioLogado = usuarios.get(0);
-            usuarioLogado.setLogged(true);
-            return "redirect:/pedidos";
-        } else {
-            return "redirect:/logar";
+    public ResponseEntity<?> logarUsuario(@ModelAttribute Usuario usuario) {
+        try { 
+            
+             return (usuarioService.Logar(usuario));
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro Interno em logar Usuario: " + e.getMessage());
         }
     }
 

@@ -8,9 +8,10 @@
 </head>
 <body>
     <div class="grid-container">
-        <div th:each="registro : ${registros}" class="card">
-            <h2 th:text="${registro.titulo}"></h2>
-            <p th:text="${registro.descricao}"></p>
+        <div th:each="item : ${registros}" class="card">
+            <h2 th:text="${item.NomeItem}"></h2>
+            <p th:text="${item.DescItem}"></p>
+            <p th:text="${item.PriceItem}"></p>
         </div>
     </div>
 </body>

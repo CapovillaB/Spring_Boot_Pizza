@@ -1,7 +1,5 @@
 package com.pizzaria.sis_pedido.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +39,7 @@ public class PedidoController {
         modelAndView.addObject("registros", registros);
         return modelAndView;
     }
+
 
    
 }

@@ -17,29 +17,38 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     
-    public ResponseEntity<?> Logar(Usuario usuario) {
+    public String Logar(Usuario usuario) {
         List<Usuario> usuarios = usuarioRepository.findByNomeAndPswd(usuario.getNome(), usuario.getPswd());
         if (!usuarios.isEmpty()) {
             Usuario usuarioLogado = usuarios.get(0);
             usuarioLogado.setLogged(true);
-            return ResponseEntity.ok("redirect:/pedido");
+            return "redirect:/pedido";
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("redirect:/logar");
+            return "redirect:/logar";
         }
 
 
     }
 
-    public ResponseEntity<?> criarUsuario(Usuario usuario) {
+    public String criarUsuario(Usuario usuario) {
         try {
             usuarioRepository.save(usuario);
-            return new ResponseEntity<String>("redirect:/logar",HttpStatus.OK);
+            return "redirect:/logar";
 
         } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("redirect:/logar");
+            return "redirect:/logar";
             
         }
         
+    }
+
+    public Usuario buscarUsuarioPorNome(String nomeUsusario) {
+
+    return usuarioRepository.findByNome(nomeUsusario).get(0);
+    }
+
+    public void mudarSenha(String pswd, int id) {
+        usuarioRepository.updateUsuarioPswd(pswd, id);
     }
 }

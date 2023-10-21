@@ -16,16 +16,20 @@ public class ClienteService {
       @Autowired
     private ClienteRepository clienteRepository;
 
-    public ResponseEntity<?> criarCliente(Cliente cliente) {
+    public String criarCliente(Cliente cliente) {
         try {
             clienteRepository.save(cliente);
-            return new ResponseEntity<String>("redirect:/logar",HttpStatus.OK);
+            return "redirect:/logar";
 
         } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("redirect:/logar");
+            return "redirect:/logar";
             
         }
         
+    }
+
+    public Cliente buscarClientePorCPF( int clienteCPF) {
+        return clienteRepository.findByClienteCPF(clienteCPF);
     }
 }

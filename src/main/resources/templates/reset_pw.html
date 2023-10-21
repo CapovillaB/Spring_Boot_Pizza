@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Usuário</h1>
-    <form th:action="@{/cadastro}" method="POST" th:object="${cliente}">
+    <form th:action="@{/reset_pw}" method="POST" th:object="${cliente}">
 
         <!-- Dados de Reset -->
         Usuário:<br>
@@ -15,15 +15,15 @@
         CPF do Cliente:<br>
         <input type="number" name="clienteCPF" required><br>
         Email do Cliente:<br>
-        <input type="text" name="clienteEmail" required><br>
+        <input type="text" name="clienteEmail" required><br><br>
 
         Nova Senha:<br>
-        <input type="password" name="usuario.pswd" required><br><br>
+        <input type="password" name="usuario.pswd" required><br>
 
 
 
         <button type="submit">Cadastrar</button>
-        <button type="button" onclick="location.href='login'">Cancelar</button>
+        <button type="button" onclick="location.href='logar'">Cancelar</button>
     </form>
     
 </body>

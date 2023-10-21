@@ -26,7 +26,7 @@ public class Cliente {
     private String clienteNome;
 
     @Column(name = "cliente_cpf")
-    private String clienteCPF;
+    private int clienteCPF;
 
     @Column(name = "cliente_end")
     private String clienteEnd;
@@ -41,7 +41,7 @@ public class Cliente {
     private Usuario usuario;
 
 
-    public Cliente(String clienteNome, String clienteCPF, String clienteEnd, String clienteEmail, String clienteTel) {
+    public Cliente(String clienteNome, int clienteCPF, String clienteEnd, String clienteEmail, String clienteTel) {
         this.clienteNome = clienteNome;
         this.clienteCPF = clienteCPF;
         this.clienteEnd = clienteEnd;

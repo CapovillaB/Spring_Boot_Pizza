@@ -3,8 +3,6 @@ package com.pizzaria.sis_pedido.model.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pizzaria.sis_pedido.model.entity.Usuario;
@@ -18,7 +16,7 @@ public class UsuarioService {
 
     
     public String Logar(Usuario usuario) {
-        List<Usuario> usuarios = usuarioRepository.findByNomeAndPswd(usuario.getNome(), usuario.getPswd());
+        List<Usuario> usuarios = usuarioRepository.findByNomeUsuarioAndPswdUsuario(usuario.getNomeUsuario(), usuario.getPswdUsuario());
         if (!usuarios.isEmpty()) {
             Usuario usuarioLogado = usuarios.get(0);
             usuarioLogado.setLogged(true);
@@ -45,10 +43,11 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPorNome(String nomeUsusario) {
 
-    return usuarioRepository.findByNome(nomeUsusario).get(0);
+    return usuarioRepository.findByNomeUsuario(nomeUsusario).get(0);
     }
 
     public void mudarSenha(String pswd, int id) {
-        usuarioRepository.updateUsuarioPswd(pswd, id);
+       usuarioRepository.setPswdUsuarioByIdUsuario(pswd, id);
+      
     }
 }

@@ -24,11 +24,11 @@ public class ResetPwController {
     @GetMapping
     public String resetPassword(@RequestBody Cliente cliente) {
 
-        Cliente oldCliente = clienteService.buscarClientePorCPF(Integer.parseInt(cliente.getClienteCPF()));
-        Usuario oldUsuario = usuarioService.buscarUsuarioPorNome(cliente.getUsuario().getNome());
+        Cliente oldCliente = clienteService.buscarClientePorCPF(cliente.getClienteCPF());
+        Usuario oldUsuario = usuarioService.buscarUsuarioPorNome(cliente.getUsuario().getNomeUsuario());
         
-        if ((cliente.getClienteEmail().equals(oldCliente.getClienteEmail()))&&(oldCliente.getUsuarioId() == oldUsuario.getId())) {
-            usuarioService.mudarSenha(cliente.getUsuario().getPswd(), oldUsuario.getId());
+        if ((cliente.getClienteEmail().equals(oldCliente.getClienteEmail()))&&(oldCliente.getUsuarioId() == oldUsuario.getIdUsuario())) {
+            usuarioService.mudarSenha(cliente.getUsuario().getPswdUsuario(), oldUsuario.getIdUsuario());
             return "redirect:/logar";
         } else {
             return "redirect:/reset_pw";   

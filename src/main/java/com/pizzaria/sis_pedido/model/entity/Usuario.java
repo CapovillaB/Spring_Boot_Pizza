@@ -1,11 +1,6 @@
 package com.pizzaria.sis_pedido.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,26 +11,27 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "usuario", schema = "pizzaria" )
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private int id;
+    private int idUsuario;
 
     @Column(name = "nome_usuario")
-    private String nome;
+    private String nomeUsuario;
 
     @Column(name = "pswd_usuario")
-    private String pswd;
+    private String pswdUsuario;
 
     @Transient
     private boolean logged;
 
 
     public Usuario(String nome_usuario, String pswd_usuario) {
-        this.nome = nome_usuario;
-        this.pswd = pswd_usuario;
+        this.nomeUsuario = nome_usuario;
+        this.pswdUsuario = pswd_usuario;
 
     }
     

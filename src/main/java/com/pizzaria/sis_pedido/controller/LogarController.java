@@ -32,12 +32,12 @@ public class LogarController {
 
 
     @PostMapping
-    public ResponseEntity<?> logarUsuario(@ModelAttribute Usuario usuario) {
+    public String logarUsuario(@ModelAttribute Usuario usuario) {
         try { 
             return (usuarioService.Logar(usuario));
             
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro Interno em logar Usuario: " + e.getMessage());
+            return "redirect:/logar";
         }
     }
 

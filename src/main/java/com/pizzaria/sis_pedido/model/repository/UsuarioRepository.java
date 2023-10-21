@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.pizzaria.sis_pedido.model.entity.Usuario;
@@ -14,11 +15,11 @@ import com.pizzaria.sis_pedido.model.entity.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     
-    List<Usuario> findByNome(String nome);
-    List<Usuario> findByNomeAndPswd(String nome, String pswd);
+    List<Usuario> findByNomeUsuario(String nomeUsuario);
+    List<Usuario> findByNomeUsuarioAndPswdUsuario(String nomeUsuario, String pswdUsuario);
     
     @Modifying
-    @Query("update usuario set usuario.pswd_usuario = ?1 where usuario.id_usuario = ?2")
-    Void updateUsuarioPswd(String pswd, int id);
+    @Query("update Usuario u set u.nome_usuario = :pswdUsuario where u.id_usuario = :idUsuario")
+    void setPswdUsuarioByIdUsuario(@Param(value = "pswdUsuario") String pswdUsuario, @Param(value = "idUsuario") int idUsuario);
     
 }

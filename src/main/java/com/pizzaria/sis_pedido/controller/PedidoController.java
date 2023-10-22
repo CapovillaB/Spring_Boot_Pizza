@@ -1,7 +1,8 @@
 package com.pizzaria.sis_pedido.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import com.pizzaria.sis_pedido.model.service.ItemService;
 @RequestMapping("/pedido")
 public class PedidoController {
 
-    private List<Item> listaPedidos = new ArrayList<>();
+    private Map<String, Item> itensSelecionados = new HashMap<>();
 
     @Autowired
     private ItemService itemService;
@@ -32,7 +33,7 @@ public class PedidoController {
         List<Item> registrosB = itemService.buscarTodasBebidas();
         modelAndView.addObject("registrosB", registrosB);
 
-        modelAndView.addObject("pedidos", listaPedidos); // Adicione a lista de pedidos ao modelo
+        modelAndView.addObject("itensSelecionados", itensSelecionados); // Adicione os itens selecionados ao modelo
 
         return modelAndView;
     }
@@ -40,12 +41,8 @@ public class PedidoController {
     @PostMapping
     public String adicionarAoPedido(@RequestParam String nomeItem, @RequestParam String descItem, @RequestParam double priceItem) {
         Item item = new Item(nomeItem, descItem, priceItem);
-        listaPedidos.add(item);
+        itensSelecionados.put(nomeItem, item);
+
         return "redirect:/pedido";
     }
 }
-
-/* criar metodos de lista de pedido com adição de itens
- * criar metodo de salvar pedido
- * criar método de cancelar pedido
- */

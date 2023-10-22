@@ -22,18 +22,14 @@
         </form>
     </div>
 
-    <!-- Lista de Pedidos -->
+    <!-- Itens Selecionados -->
     <div class="pedido-container">
-        <h2>Lista de Pedidos</h2>
+        <h2>Itens Selecionados</h2>
         <ul>
-            <li th:each="item : ${pedidos}">
-                <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
+            <li th:each="entry: ${itensSelecionados.entrySet()}">
+                <span th:text="${entry.key} + ' - ' + ${entry.value.descItem} + ' - R$ ' + ${entry.value.priceItem}"></span>
             </li>
         </ul>
-        <form th:action="@{/enviarPedido}" method="post">
-            <button type="submit">Pedir</button>
-            <button type="button" th:onclick="'location.href=\'/cancelarPedido\''">Cancelar</button>
-        </form>
     </div>
 </body>
 </html>

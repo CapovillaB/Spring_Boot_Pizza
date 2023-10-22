@@ -1,5 +1,6 @@
 package com.pizzaria.sis_pedido.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,15 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pizzaria.sis_pedido.model.entity.Cliente;
 import com.pizzaria.sis_pedido.model.entity.Item;
+import com.pizzaria.sis_pedido.model.entity.Pedido;
+import com.pizzaria.sis_pedido.model.service.ClienteService;
 import com.pizzaria.sis_pedido.model.service.ItemService;
+import com.pizzaria.sis_pedido.model.service.PedidoService;
 
 @Controller
 @RequestMapping("/pedido")
 public class PedidoController {
 
     @Autowired
+    private ClienteService clienteService;
     private ItemService itemService;
+    private PedidoService pedidoService;
+
 
     private Map<Integer, Item> mapaDeItens = new LinkedHashMap<>();
     private int contadorDeItens = 1;
@@ -34,7 +42,7 @@ public class PedidoController {
 
         modelAndView.addObject("registrosP", registrosP);
         modelAndView.addObject("registrosB", registrosB);
-        modelAndView.addObject("pedidos", mapaDeItens.values());
+        modelAndView.addObject("itensSelecionados", mapaDeItens.values());
 
         return modelAndView;
     }
@@ -57,7 +65,50 @@ public class PedidoController {
 
         return "redirect:/pedido";
     }
+    @PostMapping("/enviarPedido")
+    public String enviarPedido(@RequestParam String logarUsuario) {
+        // Com a variável logarUsuario, você tem o nome do cliente logado.
+        // Você pode obter o cliente associado a esse nome.
+        Cliente cliente = clienteService.buscarClientePorNomeUsuario(logarUsuario);
+    
+        // Crie um novo pedido
+        Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+    
+        // Transforme os IDs dos itens em objetos Item, se necessário.
+        List<Item> itensSelecionados = new ArrayList<>();
+        for (Integer itemId : mapaDeItens.keySet()) {
+            Item item = itemService.buscarItemPorId(itemId);
+            if (item != null) {
+                itensSelecionados.add(item);
+            }
+        }
+        
+        // Adicione os itens do pedido ao pedido.
+        pedido.setItens(itensSelecionados);
+        
+        // Calcule o valor total do pedido com base nos itens.
+        float valorTotal = calcularValorTotal(itensSelecionados);
+        pedido.setPedidoValor(valorTotal);
+        
+        // Salve o pedido no banco de dados.
+        pedidoService.salvarPedido(pedido);
+        
+        // Limpe o mapa de itens após o pedido ser enviado
+        // mapaDeItens.clear();
+        
+        // Redirecione para a página de confirmação, ou qualquer outra página desejada.
+        return "redirect:/confirmacaoPedido";
+    }
+    
+    
+    
+
 }
+
+
+
+
 
 
 

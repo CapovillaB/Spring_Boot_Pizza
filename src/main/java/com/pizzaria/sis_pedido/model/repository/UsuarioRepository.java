@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.pizzaria.sis_pedido.model.entity.Usuario;
 
+import jakarta.transaction.Transactional;
+
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
@@ -18,6 +20,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Usuario> findByNomeUsuario(String nomeUsuario);
     List<Usuario> findByNomeUsuarioAndPswdUsuario(String nomeUsuario, String pswdUsuario);
     
+    @Transactional
     @Modifying
     @Query("update Usuario u set u.pswdUsuario = :pswdUsuario where u.idUsuario = :idUsuario")
     void setPswdUsuarioByIdUsuario(@Param(value = "pswdUsuario") String pswdUsuario, @Param(value = "idUsuario") Integer idUsuario);

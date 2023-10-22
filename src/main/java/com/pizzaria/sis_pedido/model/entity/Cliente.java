@@ -26,7 +26,7 @@ public class Cliente {
     private String clienteNome;
 
     @Column(name = "cliente_cpf")
-    private Integer clienteCPF;
+    private Long clienteCPF;
 
     @Column(name = "cliente_end")
     private String clienteEnd;
@@ -35,13 +35,14 @@ public class Cliente {
     private String clienteEmail;
 
     @Column(name = "cliente_tel")
-    private Integer clienteTel;
+    private Long 
+    clienteTel;
 
     @Transient
     private Usuario usuario;
 
 
-    public Cliente(Usuario usuario, String clienteNome, Integer clienteCPF, String clienteEnd, String clienteEmail, Integer clienteTel) {
+    public Cliente(Usuario usuario, String clienteNome, Long clienteCPF, String clienteEnd, String clienteEmail, Long clienteTel) {
         this.clienteNome = clienteNome;
         this.clienteCPF = clienteCPF;
         this.clienteEnd = clienteEnd;
@@ -51,7 +52,7 @@ public class Cliente {
     }
 
 
-    public Cliente(int clienteCPF, String clienteEmail, Usuario usuario) {
+    public Cliente(Long clienteCPF, String clienteEmail, Usuario usuario) {
         this.clienteCPF = clienteCPF;
         this.clienteEmail = clienteEmail;
         this.usuario = usuario;

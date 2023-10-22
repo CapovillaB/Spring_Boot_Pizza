@@ -15,6 +15,9 @@ import lombok.Setter;
 @Table(name = "item")
 public class Item {
     
+    public Item(String nomeItem2, String descItem2, double priceItem2) {
+    }
+
     @Id
     @Column(name = "id_item", updatable = false)
     private int idItem;

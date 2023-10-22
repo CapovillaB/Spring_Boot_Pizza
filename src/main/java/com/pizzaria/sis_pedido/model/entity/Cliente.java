@@ -17,16 +17,16 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
-    private int idCliente;
+    private Integer idCliente;
 
     @Column(name = "id_usuario")
-    private int usuarioId;
+    private Integer usuarioId;
 
     @Column(name = "cliente_nome")
     private String clienteNome;
 
     @Column(name = "cliente_cpf")
-    private int clienteCPF;
+    private Long clienteCPF;
 
     @Column(name = "cliente_end")
     private String clienteEnd;
@@ -35,13 +35,14 @@ public class Cliente {
     private String clienteEmail;
 
     @Column(name = "cliente_tel")
-    private int clienteTel;
+    private Long 
+    clienteTel;
 
     @Transient
     private Usuario usuario;
 
 
-    public Cliente(Usuario usuario, String clienteNome, int clienteCPF, String clienteEnd, String clienteEmail, int clienteTel) {
+    public Cliente(Usuario usuario, String clienteNome, Long clienteCPF, String clienteEnd, String clienteEmail, Long clienteTel) {
         this.clienteNome = clienteNome;
         this.clienteCPF = clienteCPF;
         this.clienteEnd = clienteEnd;
@@ -49,6 +50,15 @@ public class Cliente {
         this.clienteTel = clienteTel;
         this.usuario = usuario;
     }
+
+
+    public Cliente(Long clienteCPF, String clienteEmail, Usuario usuario) {
+        this.clienteCPF = clienteCPF;
+        this.clienteEmail = clienteEmail;
+        this.usuario = usuario;
+    }
+
+    
 
 
     

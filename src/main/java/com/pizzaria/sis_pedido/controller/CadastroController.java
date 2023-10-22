@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pizzaria.sis_pedido.model.entity.Cliente;
@@ -34,7 +35,7 @@ public class CadastroController {
 
 
     @PostMapping
-    public String processarCadastro(@ModelAttribute Cliente newCliente) {
+    public String processarCadastro(@ModelAttribute Cliente newCliente, @RequestParam("clienteCPF") Long clienteCPF, @RequestParam("clienteTel") Long clienteTel)  {
 
         try {
             usuarioService.criarUsuario(newCliente.getUsuario());

@@ -18,6 +18,21 @@ CREATE SCHEMA IF NOT EXISTS `pizzaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf
 USE `pizzaria` ;
 
 -- -----------------------------------------------------
+-- Table `pizzaria`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `pizzaria`.`usuario` (
+  `id_usuario` INT NOT NULL AUTO_INCREMENT,
+  `nome_usuario` VARCHAR(45) NOT NULL,
+  `pswd_usuario` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE INDEX `nome_usuario_UNIQUE` (`nome_usuario` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `pizzaria`.`cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzaria`.`cliente` (
@@ -26,14 +41,17 @@ CREATE TABLE IF NOT EXISTS `pizzaria`.`cliente` (
   `cliente_email` VARCHAR(45) NOT NULL,
   `cliente_end` VARCHAR(255) NOT NULL,
   `cliente_nome` VARCHAR(45) NOT NULL,
-  `cliente_tel` VARCHAR(255) NULL DEFAULT NULL,
-  `cliente_cpf` VARCHAR(255) NULL DEFAULT NULL,
+  `cliente_tel` BIGINT NULL DEFAULT NULL,
+  `cliente_cpf` BIGINT NULL DEFAULT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE INDEX `idCliente_UNIQUE` (`id_cliente` ASC) VISIBLE,
   UNIQUE INDEX `cliente_cpf_UNIQUE` (`cliente_cpf` ASC) VISIBLE,
-  UNIQUE INDEX `usuarioId_UNIQUE` (`id_usuario` ASC) VISIBLE)
+  INDEX `id_usuario_idx` (`id_usuario` ASC) VISIBLE,
+  CONSTRAINT `id_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `pizzaria`.`usuario` (`id_usuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -95,20 +113,6 @@ CREATE TABLE IF NOT EXISTS `pizzaria`.`pedido_item` (
     FOREIGN KEY (`id_pedido`)
     REFERENCES `pizzaria`.`pedido` (`id_pedido`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `pizzaria`.`usuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `pizzaria`.`usuario` (
-  `id_usuario` INT NOT NULL AUTO_INCREMENT,
-  `nome_usuario` VARCHAR(45) NOT NULL,
-  `pswd_usuario` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_usuario`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

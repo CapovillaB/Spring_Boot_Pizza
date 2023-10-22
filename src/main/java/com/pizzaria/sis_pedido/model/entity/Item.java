@@ -1,6 +1,8 @@
 package com.pizzaria.sis_pedido.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +31,7 @@ public class Item {
     private String descItem;
 
     @Column(name = "item_price", updatable = false)
-    private float priceItem;
+    private double priceItem;
 
     @Column(name = "item_tipo", updatable = false)
     private String tipoItem;

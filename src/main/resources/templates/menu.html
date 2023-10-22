@@ -9,27 +9,31 @@
 <body>
     <div class="grid-container">
         <!-- Menu -->
-        <form th:action="@{/pedido}" method="post">
-            <div th:each="item : ${registrosP}" class="card">
-                <h2 th:text="${item.nomeItem}"></h2>
-                <p th:text="${item.descItem}"></p>
-                <p th:text="${item.priceItem}"></p>
+        <div th:each="item : ${registrosP}" class="card">
+            <h2 th:text="${item.nomeItem}"></h2>
+            <p th:text="${item.descItem}"></p>
+            <p th:text="${item.priceItem}"></p>
+            <form th:action="@{/pedido}" method="post">
                 <input type="hidden" name="nomeItem" th:value="${item.nomeItem}" />
                 <input type="hidden" name="descItem" th:value="${item.descItem}" />
                 <input type="hidden" name="priceItem" th:value="${item.priceItem}" />
                 <button type="submit">Adicionar ao Pedido</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
-    <!-- Itens Selecionados -->
+    <!-- Lista de Pedidos -->
     <div class="pedido-container">
-        <h2>Itens Selecionados</h2>
+        <h2>Lista de Pedidos</h2>
         <ul>
-            <li th:each="entry: ${itensSelecionados.entrySet()}">
-                <span th:text="${entry.key} + ' - ' + ${entry.value.descItem} + ' - R$ ' + ${entry.value.priceItem}"></span>
+            <li th:each="item : ${pedidos}">
+                <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
             </li>
         </ul>
+        <form th:action="@{/enviarPedido}" method="post">
+            <button type="submit">Pedir</button>
+            <button type="button" th:onclick="'location.href=\'/cancelarPedido\''">Cancelar</button>
+        </form>
     </div>
 </body>
 </html>

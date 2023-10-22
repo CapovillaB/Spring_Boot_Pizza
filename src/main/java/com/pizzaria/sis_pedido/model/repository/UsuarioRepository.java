@@ -19,7 +19,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Usuario> findByNomeUsuarioAndPswdUsuario(String nomeUsuario, String pswdUsuario);
     
     @Modifying
-    @Query("update Usuario u set u.nome_usuario = :pswdUsuario where u.id_usuario = :idUsuario")
+    @Query("update Usuario u set u.pswdUsuario = :pswdUsuario where u.idUsuario = :idUsuario")
     void setPswdUsuarioByIdUsuario(@Param(value = "pswdUsuario") String pswdUsuario, @Param(value = "idUsuario") int idUsuario);
     
 }

@@ -37,6 +37,9 @@ public class Pedido {
     @Column(name = "pedido_status")
     private String pedidoStatus;
 
+    @Transient
+    private Cliente cliente;
+
     public Pedido( float pedidoValor, String pedidoPagamento, String pedidoStatus) {
         this.pedidoValor = pedidoValor;
         this.pedidoPagamento = pedidoPagamento;

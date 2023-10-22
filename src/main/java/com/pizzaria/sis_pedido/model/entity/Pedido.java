@@ -1,12 +1,22 @@
 package com.pizzaria.sis_pedido.model.entity;
 
-import jakarta.persistence.*;
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter
@@ -43,5 +53,20 @@ public class Pedido {
         this.pedidoStatus = pedidoStatus;
     }
 
+
+
+    //Pedido possui um campo cliente que armazena a associação entre o pedido e o cliente
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    //Agora, na classe PedidoController, você pode chamar o método setCliente para associar o cliente ao pedido:
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "pedido_id")  // Certifique-se de que o nome da coluna corresponde à sua tabela de itens
+    private List<Item> itens;
 
 }

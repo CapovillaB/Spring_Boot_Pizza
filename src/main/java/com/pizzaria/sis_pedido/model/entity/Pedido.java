@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -47,9 +46,6 @@ public class Pedido {
     @Column(name = "pedido_status")
     private String pedidoStatus;
 
-    @Transient
-    private Cliente cliente;
-
     public Pedido( float pedidoValor, String pedidoPagamento, String pedidoStatus) {
         this.pedidoValor = pedidoValor;
         this.pedidoPagamento = pedidoPagamento;
@@ -68,8 +64,6 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    @OneToMany
-    @JoinColumn(name = "pedido_id")  // Certifique-se de que o nome da coluna corresponde à sua tabela de itens
-    private List<Item> itens;
+
 
 }

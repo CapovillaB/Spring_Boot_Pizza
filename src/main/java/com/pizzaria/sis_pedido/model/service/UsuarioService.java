@@ -46,7 +46,7 @@ public class UsuarioService {
     return usuarioRepository.findByNomeUsuario(nomeUsusario).get(0);
     }
 
-    public void mudarSenha(String pswd, int id) {
+    public void mudarSenha(String pswd, Integer id) {
        usuarioRepository.setPswdUsuarioByIdUsuario(pswd, id);
       
     }

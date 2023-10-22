@@ -10,7 +10,7 @@ import com.pizzaria.sis_pedido.model.entity.Pedido;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-    List<Pedido> findByIdCliente(int idCliente);
+    List<Pedido> findByIdCliente(Integer idCliente);
 
-    Pedido findByIdPedido(int idPedido);
+    Pedido findByIdPedido(Integer idPedido);
 }

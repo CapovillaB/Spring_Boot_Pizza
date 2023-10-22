@@ -9,10 +9,10 @@
     <h1>Login</h1>
     <form th:action="@{/logar}" method="POST" th:object="${usuario}">
         <label for="nome">Usuário:</label>
-        <input type="text" id="nome" name="nome" th:field="*{nome}" required><br><br>
+        <input type="text" id="nome" name="nome" th:field="*{nomeUsuario}" required><br><br>
         
         <label for="pswd">Senha:</label>
-        <input type="password" id="pswd" name="pswd" th:field="*{pswd}" required><br><br>
+        <input type="password" id="pswd" name="pswd" th:field="*{pswdUsuario}" required><br><br>
         
         <button type="submit">Entrar</button>
         <button type="button" onclick="location.href='cadastro'">Cadastrar</button>

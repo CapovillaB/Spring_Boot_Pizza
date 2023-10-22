@@ -35,18 +35,19 @@ public class Cliente {
     private String clienteEmail;
 
     @Column(name = "cliente_tel")
-    private String clienteTel;
+    private int clienteTel;
 
     @Transient
     private Usuario usuario;
 
 
-    public Cliente(String clienteNome, int clienteCPF, String clienteEnd, String clienteEmail, String clienteTel) {
+    public Cliente(Usuario usuario, String clienteNome, int clienteCPF, String clienteEnd, String clienteEmail, int clienteTel) {
         this.clienteNome = clienteNome;
         this.clienteCPF = clienteCPF;
         this.clienteEnd = clienteEnd;
         this.clienteEmail = clienteEmail;
         this.clienteTel = clienteTel;
+        this.usuario = usuario;
     }
 
 

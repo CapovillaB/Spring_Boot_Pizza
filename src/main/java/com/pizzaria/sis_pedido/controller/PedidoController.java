@@ -116,9 +116,9 @@ public class PedidoController {
             // Salve o pedido no banco de dados.
             pedidoService.salvarPedido(pedido);
 
-     //<<<< "BD pedido_status"  >>>>//
-        String pedidoStatus = "teste";
-        pedido.setPedidoStatus(pedidoStatus);
+            //<<<< "BD pedido_status"  >>>>//
+            pedidoStatus = "teste";
+            pedido.setPedidoStatus(pedidoStatus);
 
             // Redirecione para a página de confirmação, ou qualquer outra página desejada.
             return "redirect:/confirmacaoPedido";

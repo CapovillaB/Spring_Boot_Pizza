@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,13 +48,9 @@ public class Pedido {
     @Column(name = "pedido_status")
     private String pedidoStatus;
 
-    public Pedido( float pedidoValor, String pedidoPagamento, String pedidoStatus) {
-        this.pedidoValor = pedidoValor;
-        this.pedidoPagamento = pedidoPagamento;
-        this.pedidoStatus = pedidoStatus;
-    }
-
-
+    
+    @OneToMany
+    @JoinColumn()
 
     //Pedido possui um campo cliente que armazena a associação entre o pedido e o cliente
     @ManyToOne
@@ -64,6 +62,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
+    public Pedido( float pedidoValor, String pedidoPagamento, String pedidoStatus) {
+        this.pedidoValor = pedidoValor;
+        this.pedidoPagamento = pedidoPagamento;
+        this.pedidoStatus = pedidoStatus;
+    }
 
 
 }

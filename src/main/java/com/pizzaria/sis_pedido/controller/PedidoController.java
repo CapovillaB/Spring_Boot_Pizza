@@ -90,6 +90,8 @@ public class PedidoController {
                     itensSelecionados.add(item);
                 }
             }
+        
+      
 
             // Adicione os itens do pedido ao pedido.
             pedido.setItens(itensSelecionados);
@@ -114,8 +116,9 @@ public class PedidoController {
             // Salve o pedido no banco de dados.
             pedidoService.salvarPedido(pedido);
 
-            // Limpe o mapa de itens após o pedido ser enviado
-            // mapaDeItens.clear();
+     //<<<< "BD pedido_status"  >>>>//
+        String pedidoStatus = "teste";
+        pedido.setPedidoStatus(pedidoStatus);
 
             // Redirecione para a página de confirmação, ou qualquer outra página desejada.
             return "redirect:/confirmacaoPedido";

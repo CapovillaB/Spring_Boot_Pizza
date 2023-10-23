@@ -1,6 +1,7 @@
 package com.pizzaria.sis_pedido.model.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,6 +51,7 @@ public class Pedido {
     
     @OneToMany
     @JoinColumn()
+    List<Item> itens;
 
     //Pedido possui um campo cliente que armazena a associação entre o pedido e o cliente
     @ManyToOne

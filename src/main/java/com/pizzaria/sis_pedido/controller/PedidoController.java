@@ -26,7 +26,9 @@ public class PedidoController {
 
     @Autowired
     private ClienteService clienteService;
+    @Autowired
     private ItemService itemService;
+    @Autowired
     private PedidoService pedidoService;
 
     private Map<Integer, Item> mapaDeItens = new LinkedHashMap<>();
@@ -72,57 +74,54 @@ public class PedidoController {
     public String enviarPedido() {
         // Com a variável logarUsuario, você tem o nome do cliente logado.
         // Você pode obter o cliente associado a esse nome.
-    
+
         Cliente cliente = clienteService.buscarClientePorIdUsuario(LogarController.usuario.getIdUsuario());
         if (LogarController.usuario.isLogged()) {
-    
-        // Crie um novo pedido
-        Pedido pedido = new Pedido();
-        pedido.setCliente(cliente);
-    
-        // Transforme os IDs dos itens em objetos Item
-        List<Item> itensSelecionados = new ArrayList<>();
-        for (Integer itemId : mapaDeItens.keySet()) {
-            Item item = itemService.buscarItemPorId(itemId);
-            if (item != null) {
-                itensSelecionados.add(item);
+
+            // Crie um novo pedido
+            Pedido pedido = new Pedido();
+            pedido.setCliente(cliente);
+
+            // Transforme os IDs dos itens em objetos Item
+            List<Item> itensSelecionados = new ArrayList<>();
+            for (Integer itemId : mapaDeItens.keySet()) {
+                Item item = itemService.buscarItemPorId(itemId);
+                if (item != null) {
+                    itensSelecionados.add(item);
+                }
             }
-        }
-        
-        // Adicione os itens do pedido ao pedido.
-        pedido.setItens(itensSelecionados);
-        
 
+            // Adicione os itens do pedido ao pedido.
+            pedido.setItens(itensSelecionados);
 
-     //<<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
-        // Calcule o valor total do pedido com base nos itens.
-        float valorTotal = 0.0f; // Inicialize o valor total como 0
-        for (Item item : itensSelecionados) {
-            valorTotal += item.getPriceItem(); // Some o preço de cada item ao valor total
-        }
-        // Define o valor total no pedido
-        pedido.setPedidoValor(valorTotal);
+            // <<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
+            // Calcule o valor total do pedido com base nos itens.
+            float valorTotal = 0.0f; // Inicialize o valor total como 0
+            for (Item item : itensSelecionados) {
+                valorTotal += item.getPriceItem(); // Some o preço de cada item ao valor total
+            }
+            // Define o valor total no pedido
+            pedido.setPedidoValor(valorTotal);
 
+            // <<<< "BD pedido_pag" >>>>//
+            String tipoPagamento = "Cartao";
+            pedido.setPedidoPagamento(tipoPagamento);
 
-     //<<<< "BD pedido_pag"  >>>>//
-        String tipoPagamento = "Cartao";
-        pedido.setPedidoPagamento(tipoPagamento);
+            // <<<< "BD pedido_status" >>>>//
+            String pedidoStatus = "teste";
+            pedido.setPedidoStatus(pedidoStatus);
 
+            // Salve o pedido no banco de dados.
+            pedidoService.salvarPedido(pedido);
 
-     //<<<< "BD pedido_status"  >>>>//
-        String pedidoStatus = "teste";
-        pedido.setPedidoStatus(pedidoStatus)
+            // Limpe o mapa de itens após o pedido ser enviado
+            // mapaDeItens.clear();
 
+            // Redirecione para a página de confirmação, ou qualquer outra página desejada.
+            return "redirect:/confirmacaoPedido";
+        } else {
+            return "redirect:/pedido";
 
-
-        // Salve o pedido no banco de dados.
-        pedidoService.salvarPedido(pedido);
-        
-        // Limpe o mapa de itens após o pedido ser enviado
-        // mapaDeItens.clear();
-        
-        // Redirecione para a página de confirmação, ou qualquer outra página desejada.
-        return "redirect:/confirmacaoPedido";
         }
     }
 

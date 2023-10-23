@@ -35,8 +35,7 @@ public class Cliente {
     private String clienteEmail;
 
     @Column(name = "cliente_tel")
-    private Long 
-    clienteTel;
+    private Long clienteTel;
 
     @Transient
     private Usuario usuario;

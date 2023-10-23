@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.service.UsuarioService;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/logar")
@@ -17,7 +19,7 @@ public class LogarController {
     @Autowired
     UsuarioService usuarioService;
 
-    public static Usuario usuario = new Usuario();
+    public Usuario usuario = new Usuario();
 
     @GetMapping
     public ModelAndView paginaUsuarios() {
@@ -28,9 +30,10 @@ public class LogarController {
 
 
     @PostMapping
-    public String logarUsuario(@ModelAttribute Usuario usuario) {
+    public String logarUsuario(@ModelAttribute Usuario usuario, HttpSession session) {
         try {
-            usuarioService.Logar(usuario);
+            usuarioService.Logar(usuario, session);
+
             return "redirect:/pedido";
             
         } catch (Exception e) {

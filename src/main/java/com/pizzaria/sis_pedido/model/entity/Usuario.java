@@ -1,5 +1,7 @@
 package com.pizzaria.sis_pedido.model.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,12 +14,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "usuario", schema = "pizzaria" )
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private Integer idUsuario;
+    private int idUsuario;
 
     @Column(name = "nome_usuario")
     private String nomeUsuario;

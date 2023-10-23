@@ -1,6 +1,7 @@
 package com.pizzaria.sis_pedido.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pizzaria.sis_pedido.model.entity.Cliente;
 import com.pizzaria.sis_pedido.model.entity.Item;
 import com.pizzaria.sis_pedido.model.entity.Pedido;
+import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.service.ClienteService;
 import com.pizzaria.sis_pedido.model.service.ItemService;
 import com.pizzaria.sis_pedido.model.service.PedidoService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pedido")
@@ -71,12 +74,13 @@ public class PedidoController {
     }
 
     @PostMapping("/enviarPedido")
-    public String enviarPedido() {
+    public String enviarPedido(HttpSession session) {
         // Com a variável logarUsuario, você tem o nome do cliente logado.
         // Você pode obter o cliente associado a esse nome.
-
-        Cliente cliente = clienteService.buscarClientePorIdUsuario(LogarController.usuario.getIdUsuario());
-        if (LogarController.usuario.isLogged()) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
+        
+        if (usuario.isLogged()) {
 
             // Crie um novo pedido
             Pedido pedido = new Pedido();
@@ -89,12 +93,15 @@ public class PedidoController {
                 if (item != null) {
                     itensSelecionados.add(item);
                 }
+                else {
+                    System.out.println("erro ao popular lista de epdidos");
+                }
             }
         
       
 
             // Adicione os itens do pedido ao pedido.
-            pedido.setItens(itensSelecionados);
+            //pedido.setItem(itensSelecionados);
 
             // <<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
             // Calcule o valor total do pedido com base nos itens.
@@ -113,18 +120,15 @@ public class PedidoController {
             String pedidoStatus = "teste";
             pedido.setPedidoStatus(pedidoStatus);
 
-            // Salve o pedido no banco de dados.
-            pedidoService.salvarPedido(pedido);
+            pedido.setPedidoTimestamp(new Date());
 
-            //<<<< "BD pedido_status"  >>>>//
-            pedidoStatus = "teste";
-            pedido.setPedidoStatus(pedidoStatus);
+            pedidoService.salvarPedido(pedido);
 
             // Redirecione para a página de confirmação, ou qualquer outra página desejada.
             return "redirect:/confirmacaoPedido";
         } else {
+            System.out.println("usuario não logado.");
             return "redirect:/pedido";
-
         }
     }
 

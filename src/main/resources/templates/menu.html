@@ -30,7 +30,7 @@
                 <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
             </li>
         </ul>
-        <form th:action="@{/enviarPedido}" method="post">
+        <form th:action="@{/pedido/enviarPedido}" method="post">
             <button type="submit">Pedir</button>
             <button type="button" th:onclick="'location.href=\'/cancelarPedido\''">Cancelar</button>
         </form>

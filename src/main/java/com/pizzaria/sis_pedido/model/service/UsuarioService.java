@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.repository.UsuarioRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class UsuarioService {
 
@@ -15,12 +17,13 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     
-    public Usuario Logar(Usuario usuario) {
+    public Usuario Logar(Usuario usuario, HttpSession session) {
         List<Usuario> usuarios = usuarioRepository.findByNomeUsuarioAndPswdUsuario(usuario.getNomeUsuario(), usuario.getPswdUsuario());
         Usuario usuarioLogado = new Usuario();
         if (!usuarios.isEmpty()) {
             usuarioLogado = usuarios.get(0);
-            usuarioLogado.setLogged(true);            
+            usuarioLogado.setLogged(true);
+            session.setAttribute("usuarioLogado", usuarioLogado);      
         }
 
         return usuarioLogado;
@@ -28,7 +31,7 @@ public class UsuarioService {
 
     public String criarUsuario(Usuario usuario) {
         try {
-            usuarioRepository.save(usuario);
+            usuarioRepository.save(usuario); 
             return "redirect:/logar";
 
         } catch (Exception e) {
@@ -40,8 +43,7 @@ public class UsuarioService {
     }
 
     public Usuario buscarUsuarioPorNome(String nomeUsusario) {
-
-    return usuarioRepository.findByNomeUsuario(nomeUsusario).get(0);
+        return usuarioRepository.findByNomeUsuario(nomeUsusario).get(0);
     }
 
     public void mudarSenha(String pswd, Integer id) {

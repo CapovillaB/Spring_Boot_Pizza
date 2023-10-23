@@ -21,4 +21,8 @@ public class ItemService {
     public List<Item> buscarTodasBebidas() {
         return itemRepository.findByTipoItem("BEBIDA");
     }
+
+    public Item buscarItemPorId(int itemId) {
+       return itemRepository.findByIdItem(itemId);
+    }
 }

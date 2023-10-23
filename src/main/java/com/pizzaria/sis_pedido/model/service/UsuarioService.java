@@ -15,17 +15,15 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     
-    public String Logar(Usuario usuario) {
+    public Usuario Logar(Usuario usuario) {
         List<Usuario> usuarios = usuarioRepository.findByNomeUsuarioAndPswdUsuario(usuario.getNomeUsuario(), usuario.getPswdUsuario());
+        Usuario usuarioLogado = new Usuario();
         if (!usuarios.isEmpty()) {
-            Usuario usuarioLogado = usuarios.get(0);
-            usuarioLogado.setLogged(true);
-            return "redirect:/pedido";
-        } else {
-            return "redirect:/logar";
+            usuarioLogado = usuarios.get(0);
+            usuarioLogado.setLogged(true);            
         }
 
-
+        return usuarioLogado;
     }
 
     public String criarUsuario(Usuario usuario) {

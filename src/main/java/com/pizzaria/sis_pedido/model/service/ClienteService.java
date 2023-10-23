@@ -27,6 +27,11 @@ public class ClienteService {
     }
 
     public Cliente buscarClientePorCPF( Long clienteCPF) {
-        return clienteRepository.findByClienteCPF(clienteCPF).get(0);
+        return clienteRepository.findByClienteCPF(clienteCPF);
+    }
+
+    public Cliente buscarClientePorIdUsuario( int idUsuario) {
+        Cliente cliente = clienteRepository.findByUsuarioId(idUsuario);
+        return cliente;
     }
 }

@@ -17,18 +17,21 @@ public class LogarController {
     @Autowired
     UsuarioService usuarioService;
 
+    public static Usuario usuario = new Usuario();
+
     @GetMapping
     public ModelAndView paginaUsuarios() {
         ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject("usuario", new Usuario());
+        modelAndView.addObject("usuario", usuario);
         return modelAndView;
     }
 
 
     @PostMapping
     public String logarUsuario(@ModelAttribute Usuario usuario) {
-        try { 
-            return (usuarioService.Logar(usuario));
+        try {
+            usuarioService.Logar(usuario);
+            return "redirect:/pedido";
             
         } catch (Exception e) {
             return "redirect:/logar";

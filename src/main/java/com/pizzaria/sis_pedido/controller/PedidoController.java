@@ -66,10 +66,11 @@ public class PedidoController {
         return "redirect:/pedido";
     }
     @PostMapping("/enviarPedido")
-    public String enviarPedido(@RequestParam String logarUsuario) {
+    public String enviarPedido() {
         // Com a variável logarUsuario, você tem o nome do cliente logado.
         // Você pode obter o cliente associado a esse nome.
-        Cliente cliente = clienteService.buscarClientePorNomeUsuario(logarUsuario);
+    
+        Cliente cliente = clienteService.buscarClientePorIdUsuario(LogarController.usuario.getIdUsuario());
     
         // Crie um novo pedido
         Pedido pedido = new Pedido();

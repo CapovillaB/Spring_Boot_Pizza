@@ -76,7 +76,7 @@ public class PedidoController {
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
     
-        // Transforme os IDs dos itens em objetos Item, se necessário.
+        // Transforme os IDs dos itens em objetos Item
         List<Item> itensSelecionados = new ArrayList<>();
         for (Integer itemId : mapaDeItens.keySet()) {
             Item item = itemService.buscarItemPorId(itemId);
@@ -88,10 +88,29 @@ public class PedidoController {
         // Adicione os itens do pedido ao pedido.
         pedido.setItens(itensSelecionados);
         
+
+
+    //<<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
         // Calcule o valor total do pedido com base nos itens.
-        float valorTotal = calcularValorTotal(itensSelecionados);
+        float valorTotal = 0.0f; // Inicialize o valor total como 0
+        for (Item item : itensSelecionados) {
+            valorTotal += item.getPriceItem(); // Some o preço de cada item ao valor total
+        }
+        // Define o valor total no pedido
         pedido.setPedidoValor(valorTotal);
-        
+
+
+    //<<<< "BD pedido_pag"  >>>>//
+        String tipoPagamento = "Cartao";
+        pedido.setPedidoPagamento(tipoPagamento);
+
+
+    //<<<< "BD pedido_status"  >>>>//
+        String pedidoStatus = "teste";
+        pedido.setPedidoStatus(pedidoStatus)
+
+
+
         // Salve o pedido no banco de dados.
         pedidoService.salvarPedido(pedido);
         

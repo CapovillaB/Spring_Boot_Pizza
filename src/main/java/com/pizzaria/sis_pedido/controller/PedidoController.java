@@ -26,7 +26,11 @@ public class PedidoController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
     private ItemService itemService;
+    
+    @Autowired
     private PedidoService pedidoService;
 
 
@@ -86,7 +90,7 @@ public class PedidoController {
         }
         
         // Adicione os itens do pedido ao pedido.
-        pedido.setItens(itensSelecionados);
+    /*    pedido.setItens(itensSelecionados);*/
         
 
 
@@ -107,7 +111,7 @@ public class PedidoController {
 
     //<<<< "BD pedido_status"  >>>>//
         String pedidoStatus = "teste";
-        pedido.setPedidoStatus(pedidoStatus)
+        pedido.setPedidoStatus(pedidoStatus);
 
 
 

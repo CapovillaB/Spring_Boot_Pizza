@@ -105,39 +105,35 @@ public class PedidoController {
     }
 
     @PostMapping("/enviarPedido")
-    public String enviarPedido(HttpSession session) {
+    public String enviarPedido(@RequestParam("pedidoPagamento") String pedidoPagamento, HttpSession session) {
         // Com a variável logarUsuario, você tem o nome do cliente logado.
         // Você pode obter o cliente associado a esse nome.
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
-        List<Item> listaPedido = (List<Item>) session.getAttribute("listaPedido");
+        if ((List<Item>) session.getAttribute("listaPedido") != null) {
+            listaPedido = (List<Item>) session.getAttribute("listaPedido");
+        } else{
+            return "redirect:/pedido";
+        }
+
+        if (!listaPedido.isEmpty() && precoTotal == 0.0f) {
+            for (Item item : listaPedido) {
+                precoTotal = precoTotal + item.getPriceItem();
+            }
+        }
 
         if (usuario.isLogged()) {
 
             // Crie um novo pedido
             Pedido pedido = new Pedido();
+
             pedido.setCliente(cliente);
-
-            pedido.setItem(listaPedido);
-
-            // <<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
-            // Calcule o valor total do pedido com base nos itens.
-            float valorTotal = 0.0f; // Inicialize o valor total como 0
-            for (Item item : listaPedido) {
-                valorTotal += item.getPriceItem(); // Some o preço de cada item ao valor total
-            }
-            // Define o valor total no pedido
-            pedido.setPedidoValor(valorTotal);
-
-            // <<<< "BD pedido_pag" >>>>//
-            String tipoPagamento = "Cartao";
-            pedido.setPedidoPagamento(tipoPagamento);
-
-            // <<<< "BD pedido_status" >>>>//
-            String pedidoStatus = "teste";
-            pedido.setPedidoStatus(pedidoStatus);
-
+           // pedido.setItem(listaPedido);
+            pedido.setPedidoValor(precoTotal);
             pedido.setPedidoTimestamp(new Date());
+            pedido.setPedidoPagamento(pedidoPagamento);
+            pedido.setPedidoStatus("Confirmado");
+
 
             pedidoService.salvarPedido(pedido);
 
@@ -147,6 +143,15 @@ public class PedidoController {
             System.out.println("usuario não logado.");
             return "redirect:/pedido";
         }
+    }
+
+    @PostMapping("/cancelarPedido")
+    public String cancelarPedido(HttpSession session) {
+
+        List<Item> listaVazia = new ArrayList<Item>();
+        session.setAttribute("listaPedido", listaVazia);
+
+        return "redirect:/pizzaria";
     }
 
 }

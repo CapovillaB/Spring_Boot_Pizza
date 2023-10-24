@@ -48,11 +48,17 @@
                     <button type="submit">Remover</button>
                 </form>
             </li>
+            <br><br>
             <span th:text="'Total do Pedido: R$ ' + ${precoTotal}"></span>
-        </ul><br><br>
+        </ul>
         <form th:action="@{/pedido/enviarPedido}" method="post">
+            <select name="pedidoPagamento">
+                <option value="Cartão">Cartão</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="VR">VR</option>
+            </select>
             <button type="submit">Pedir</button>
-            <button type="button" th:onclick="'location.href=\'/cancelarPedido\''">Cancelar</button>
+            <button type="button" onclick= "location.href='cancelarPedido'" >Cancelar</button>
         </form>
     </div>
 </body>

@@ -44,7 +44,7 @@
             <li th:each="item : ${itensSelecionados}">
                 <form th:action="@{/pedido/removeItem}" method="post">
                     <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
-                    <input type=hidden name=removeIdItem th:object="${item.idItem}"/>
+                    <input type=hidden name=removeItem th:value="${item.nomeItem}"/>
                     <button type="submit">Remover</button>
                 </form>
             </li>

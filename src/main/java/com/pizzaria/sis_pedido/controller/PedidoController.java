@@ -80,7 +80,7 @@ public class PedidoController {
     }
 
     @PostMapping("/removeItem")
-    public String removeItem(@RequestParam("removeIdItem") Integer removeIdItem, HttpSession session) {
+    public String removerItem(@RequestParam("removeItem") String removeItem, HttpSession session) {
 
         Item removerEsse = new Item();
 
@@ -89,14 +89,16 @@ public class PedidoController {
         }
 
         for (Item item : listaPedido){
-            if(item.getIdItem() == removeIdItem) {
+            if(item.getNomeItem().equals(removeItem)) {
+
+                System.out.println(item.getNomeItem());
                 removerEsse = item;
                 break;
             }
         }
 
         listaPedido.remove(removerEsse);
-
+        precoTotal = precoTotal - removerEsse.getPriceItem();
         session.setAttribute("listaPedido", listaPedido);
 
         return "redirect:/pedido";

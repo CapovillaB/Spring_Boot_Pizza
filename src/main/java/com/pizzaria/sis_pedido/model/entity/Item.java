@@ -1,5 +1,7 @@
 package com.pizzaria.sis_pedido.model.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,14 +17,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "item")
-public class Item {
-    
-    public Item(String nomeItem2, String descItem2, double priceItem2) {
-    }
+public class Item implements Serializable {
 
     @Id
     @Column(name = "id_item", updatable = false)
-    private int idItem;
+    private Integer idItem;
 
     @Column(name = "item_nome", updatable = false)
     private String nomeItem;
@@ -31,7 +30,7 @@ public class Item {
     private String descItem;
 
     @Column(name = "item_price", updatable = false)
-    private double priceItem;
+    private Float priceItem;
 
     @Column(name = "item_tipo", updatable = false)
     private String tipoItem;

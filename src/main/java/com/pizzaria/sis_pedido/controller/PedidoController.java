@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,41 +35,46 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
-    private Map<Integer, Item> mapaDeItens = new LinkedHashMap<>();
-    private int contadorDeItens = 1;
+    private List<Item> listaPedido = new ArrayList<Item>();
+
+    private Float precoTotal = 0.00f;
 
     @GetMapping
-    public ModelAndView mostrarMenu() {
+    public ModelAndView mostrarMenu(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("menu");
 
         List<Item> registrosP = itemService.buscarTodasPizzas();
         List<Item> registrosB = itemService.buscarTodasBebidas();
 
+        if ((List<Item>) session.getAttribute("listaPedido") != null) {
+            listaPedido = (List<Item>) session.getAttribute("listaPedido");
+        }
+
+        if (!listaPedido.isEmpty() && precoTotal == 0.0f) {
+            for (Item item : listaPedido) {
+                precoTotal = precoTotal + item.getPriceItem();
+            }
+        }
+
         modelAndView.addObject("registrosP", registrosP);
         modelAndView.addObject("registrosB", registrosB);
-        modelAndView.addObject("itensSelecionados", mapaDeItens.values());
+        modelAndView.addObject("itensSelecionados", listaPedido);
+        modelAndView.addObject("precoTotal", precoTotal);
 
         return modelAndView;
     }
 
     @PostMapping
-    public String adicionarAoPedido(@RequestParam String nomeItem, @RequestParam String descItem,
-            @RequestParam double priceItem) {
-        Item item = new Item();
-        item.setIdItem(contadorDeItens++);
-        item.setNomeItem(nomeItem);
-        item.setDescItem(descItem);
-        item.setPriceItem(priceItem);
-
-        mapaDeItens.put(item.getIdItem(), item);
+    public String adicionarAoPedido(@RequestParam("idItem") Integer idItem, @RequestParam("priceItem") Float priceItem,
+            @RequestParam("nomeItem") String nomeItem, @RequestParam("descItem") String descItem,
+            @RequestParam("tipoItem") String tipoItem, HttpSession session) {
+        Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem);
+        listaPedido.add(item);
+        precoTotal = precoTotal + priceItem;
+        session.setAttribute("listaPedido", listaPedido);
 
         System.out.println("Item adicionado ao pedido: " + item.getNomeItem() + " - " + item.getDescItem() + " - "
                 + item.getPriceItem());
-        System.out.println("Mapa de Itens:");
-        for (Item i : mapaDeItens.values()) {
-            System.out.println(
-                    i.getIdItem() + " - " + i.getNomeItem() + " - " + i.getDescItem() + " - " + i.getPriceItem());
-        }
 
         return "redirect:/pedido";
     }
@@ -79,34 +85,20 @@ public class PedidoController {
         // Você pode obter o cliente associado a esse nome.
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
-        
+        List<Item> listaPedido = (List<Item>) session.getAttribute("listaPedido");
+
         if (usuario.isLogged()) {
 
             // Crie um novo pedido
             Pedido pedido = new Pedido();
             pedido.setCliente(cliente);
 
-            // Transforme os IDs dos itens em objetos Item
-            List<Item> itensSelecionados = new ArrayList<>();
-            for (Integer itemId : mapaDeItens.keySet()) {
-                Item item = itemService.buscarItemPorId(itemId);
-                if (item != null) {
-                    itensSelecionados.add(item);
-                }
-                else {
-                    System.out.println("erro ao popular lista de epdidos");
-                }
-            }
-        
-      
-
-            // Adicione os itens do pedido ao pedido.
-            //pedido.setItem(itensSelecionados);
+            pedido.setItem(listaPedido);
 
             // <<<< VALOR TOTAL DO PEDIDO "BD pedido_valor" >>>>//
             // Calcule o valor total do pedido com base nos itens.
             float valorTotal = 0.0f; // Inicialize o valor total como 0
-            for (Item item : itensSelecionados) {
+            for (Item item : listaPedido) {
                 valorTotal += item.getPriceItem(); // Some o preço de cada item ao valor total
             }
             // Define o valor total no pedido

@@ -14,9 +14,11 @@
             <p th:text="${item.descItem}"></p>
             <p th:text="${item.priceItem}"></p>
             <form th:action="@{/pedido}" method="post">
-                <input type="hidden" name="nomeItem" th:value="${item.nomeItem}" />
-                <input type="hidden" name="descItem" th:value="${item.descItem}" />
-                <input type="hidden" name="priceItem" th:value="${item.priceItem}" />
+                <input type="hidden" name=idItem th:value="${item.idItem}" />
+                <input type="hidden" name=priceItem th:value="${item.priceItem}" />
+                <input type="hidden" name=nomeItem th:value="${item.nomeItem}" />
+                <input type="hidden" name=descItem th:value="${item.descItem}" />
+                <input type="hidden" name=tipoItem th:value="${item.tipoItem}" />
                 <button type="submit">Adicionar ao Pedido</button>
             </form>
         </div>
@@ -25,9 +27,11 @@
             <p th:text="${item.descItem}"></p>
             <p th:text="${item.priceItem}"></p>
             <form th:action="@{/pedido}" method="post">
-                <input type="hidden" name="nomeItem" th:value="${item.nomeItem}" />
-                <input type="hidden" name="descItem" th:value="${item.descItem}" />
-                <input type="hidden" name="priceItem" th:value="${item.priceItem}" />
+                <input type="hidden" name=idItem th:value="${item.idItem}" />
+                <input type="hidden" name=priceItem th:value="${item.priceItem}" />
+                <input type="hidden" name=nomeItem th:value="${item.nomeItem}" />
+                <input type="hidden" name=descItem th:value="${item.descItem}" />
+                <input type="hidden" name=tipoItem th:value="${item.tipoItem}" />
                 <button type="submit">Adicionar ao Pedido</button>
             </form>
         </div>
@@ -40,7 +44,7 @@
             <li th:each="item : ${itensSelecionados}">
                 <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
             </li>
-                
+            <span th:text="'Total do Pedido: R$ ' + ${precoTotal}"><a th:action="@{/pedido}" method="post" th:value="${item.idItem}"> remover </a></span>
         </ul>
         <form th:action="@{/pedido/enviarPedido}" method="post">
             <button type="submit">Pedir</button>

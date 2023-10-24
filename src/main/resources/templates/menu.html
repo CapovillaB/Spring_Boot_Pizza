@@ -42,10 +42,14 @@
         <h2>Lista de Pedidos</h2>
         <ul>
             <li th:each="item : ${itensSelecionados}">
-                <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
+                <form th:action="@{/pedido/removeItem}" method="post">
+                    <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
+                    <input type=hidden name=removeIdItem th:object="${item.idItem}"/>
+                    <button type="submit">Remover</button>
+                </form>
             </li>
-            <span th:text="'Total do Pedido: R$ ' + ${precoTotal}"><a th:action="@{/pedido}" method="post" th:value="${item.idItem}"> remover </a></span>
-        </ul>
+            <span th:text="'Total do Pedido: R$ ' + ${precoTotal}"></span>
+        </ul><br><br>
         <form th:action="@{/pedido/enviarPedido}" method="post">
             <button type="submit">Pedir</button>
             <button type="button" th:onclick="'location.href=\'/cancelarPedido\''">Cancelar</button>

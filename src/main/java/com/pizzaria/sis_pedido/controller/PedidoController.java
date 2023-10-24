@@ -79,6 +79,29 @@ public class PedidoController {
         return "redirect:/pedido";
     }
 
+    @PostMapping("/removeItem")
+    public String removeItem(@RequestParam("removeIdItem") Integer removeIdItem, HttpSession session) {
+
+        Item removerEsse = new Item();
+
+        if ((List<Item>) session.getAttribute("listaPedido") != null) {
+            listaPedido = (List<Item>) session.getAttribute("listaPedido");
+        }
+
+        for (Item item : listaPedido){
+            if(item.getIdItem() == removeIdItem) {
+                removerEsse = item;
+                break;
+            }
+        }
+
+        listaPedido.remove(removerEsse);
+
+        session.setAttribute("listaPedido", listaPedido);
+
+        return "redirect:/pedido";
+    }
+
     @PostMapping("/enviarPedido")
     public String enviarPedido(HttpSession session) {
         // Com a variável logarUsuario, você tem o nome do cliente logado.

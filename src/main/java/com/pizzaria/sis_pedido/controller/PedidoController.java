@@ -128,16 +128,18 @@ public class PedidoController {
             Pedido pedido = new Pedido();
 
             pedido.setCliente(cliente);
-           // pedido.setItem(listaPedido);
             pedido.setPedidoValor(precoTotal);
-            pedido.setPedidoTimestamp(new Date());
+            Date instante = new Date();
+            pedido.setPedidoTimestamp(instante);
             pedido.setPedidoPagamento(pedidoPagamento);
             pedido.setPedidoStatus("Confirmado");
 
-
             pedidoService.salvarPedido(pedido);
 
-            // Redirecione para a página de confirmação, ou qualquer outra página desejada.
+            pedido = pedidoService.acharPedidoTS(instante);
+            pedido.setItem(listaPedido);
+            session.setAttribute("pedido", pedido);
+
             return "redirect:/confirmacaoPedido";
         } else {
             System.out.println("usuario não logado.");

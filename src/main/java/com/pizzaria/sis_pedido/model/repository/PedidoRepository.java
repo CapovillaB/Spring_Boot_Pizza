@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.pizzaria.sis_pedido.model.entity.Cliente;
 import com.pizzaria.sis_pedido.model.entity.Pedido;
+import java.util.Date;
+
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
@@ -14,4 +16,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     List<Pedido> findByCliente(Cliente cliente);
 
     Pedido findByIdPedido(Integer idPedido);
+    
+    Pedido findByPedidoTimestamp(Date pedidoTimestamp);
 }

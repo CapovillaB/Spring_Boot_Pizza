@@ -79,7 +79,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `pizzaria`.`pedido` (
   `id_pedido` INT NOT NULL AUTO_INCREMENT,
   `id_cliente` INT NOT NULL,
-  `pedido_ts` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pedido_ts` DATETIME(6) NULL DEFAULT NULL,
   `pedido_valor` FLOAT NOT NULL,
   `pedido_pag` VARCHAR(45) NOT NULL,
   `pedido_status` VARCHAR(45) NOT NULL,
@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `pizzaria`.`pedido` (
     FOREIGN KEY (`id_cliente`)
     REFERENCES `pizzaria`.`cliente` (`id_cliente`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 28
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -113,27 +114,41 @@ CREATE TABLE IF NOT EXISTS `pizzaria`.`pedido_item` (
     FOREIGN KEY (`id_pedido`)
     REFERENCES `pizzaria`.`pedido` (`id_pedido`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE `spring_session` (
-  `PRIMARY_ID` char(36) NOT NULL,
-  `SESSION_ID` char(36) NOT NULL,
-  `CREATION_TIME` bigint NOT NULL,
-  `LAST_ACCESS_TIME` bigint NOT NULL,
-  `MAX_INACTIVE_INTERVAL` int NOT NULL,
-  `EXPIRY_TIME` bigint NOT NULL,
-  `PRINCIPAL_NAME` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`PRIMARY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
 
-CREATE TABLE `spring_session_attributes` (
-  `SESSION_PRIMARY_ID` char(36) NOT NULL,
-  `ATTRIBUTE_NAME` varchar(200) NOT NULL,
-  `ATTRIBUTE_BYTES` blob NOT NULL,
-  PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`),
-  CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+-- -----------------------------------------------------
+-- Table `pizzaria`.`spring_session`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `pizzaria`.`spring_session` (
+  `PRIMARY_ID` CHAR(36) NOT NULL,
+  `SESSION_ID` CHAR(36) NOT NULL,
+  `CREATION_TIME` BIGINT NOT NULL,
+  `LAST_ACCESS_TIME` BIGINT NOT NULL,
+  `MAX_INACTIVE_INTERVAL` INT NOT NULL,
+  `EXPIRY_TIME` BIGINT NOT NULL,
+  `PRINCIPAL_NAME` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`PRIMARY_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `pizzaria`.`spring_session_attributes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `pizzaria`.`spring_session_attributes` (
+  `SESSION_PRIMARY_ID` CHAR(36) NOT NULL,
+  `ATTRIBUTE_NAME` VARCHAR(200) NOT NULL,
+  `ATTRIBUTE_BYTES` BLOB NOT NULL,
+  PRIMARY KEY (`SESSION_PRIMARY_ID`, `ATTRIBUTE_NAME`),
+  CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK`
+    FOREIGN KEY (`SESSION_PRIMARY_ID`)
+    REFERENCES `pizzaria`.`spring_session` (`PRIMARY_ID`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

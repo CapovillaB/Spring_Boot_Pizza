@@ -109,6 +109,9 @@ public class PedidoController {
         // Com a variável logarUsuario, você tem o nome do cliente logado.
         // Você pode obter o cliente associado a esse nome.
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        if(usuario == null){
+            return "redirect:/logar";
+        }
         Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
         if ((List<Item>) session.getAttribute("listaPedido") != null) {
             listaPedido = (List<Item>) session.getAttribute("listaPedido");
@@ -145,7 +148,7 @@ public class PedidoController {
             return "redirect:/confirmacaoPedido";
         } else {
             System.out.println("usuario não logado.");
-            return "redirect:/pedido";
+            return "redirect:/logar";
         }
     }
 

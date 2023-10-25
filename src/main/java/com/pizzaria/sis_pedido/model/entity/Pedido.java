@@ -1,6 +1,9 @@
 package com.pizzaria.sis_pedido.model.entity;
 
-import java.util.Date;
+import java.io.Serializable;
+
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -12,8 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "pedido")
-public class Pedido {
+public class Pedido implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +35,7 @@ public class Pedido {
     private int idPedido;
 
     @Column(name = "pedido_ts")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date pedidoTimestamp;
+    private LocalDateTime pedidoTimestamp;
 
     @Column(name = "pedido_valor")
     private float pedidoValor;
@@ -44,13 +45,11 @@ public class Pedido {
 
     @Column(name = "pedido_status")
     private String pedidoStatus;
-
     
-    @ManyToMany
-    @JoinColumn(name = "id_item")
+    @Transient
     List<Item> item;
 
-    //Pedido possui um campo cliente que armazena a associação entre o pedido e o cliente
+    
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
@@ -61,11 +60,10 @@ public class Pedido {
     }
 
 
-    public Pedido(float pedidoValor, String pedidoPagamento, String pedidoStatus, List<Item> item, Cliente cliente) {
+    public Pedido(float pedidoValor, String pedidoPagamento, String pedidoStatus, Cliente cliente) {
         this.pedidoValor = pedidoValor;
         this.pedidoPagamento = pedidoPagamento;
         this.pedidoStatus = pedidoStatus;
-        this.item = item;
         this.cliente = cliente;
     }
 }   

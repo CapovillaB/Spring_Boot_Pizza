@@ -1,5 +1,7 @@
 package com.pizzaria.sis_pedido.model.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

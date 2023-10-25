@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import jakarta.persistence.*;
 
 @Getter
@@ -18,7 +19,7 @@ public class PedidoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pi")
-    private Integer idPi;
+    private int idPi;
 
     @Column(name = "pi_valor")
     private Float piValor;
@@ -26,21 +27,29 @@ public class PedidoItem {
     @Column(name = "pi_qtd")
     private Integer piQuantidade;
 
-    @ManyToOne
-    @JoinColumn(name = "id_pedido")
-    private Integer idPedido;
-
-    @ManyToOne
-    @JoinColumn(name = "id_item")
-    private Integer idItem;
-
+    
+    @Column(name = "id_pedido")
+    private int idPedido;
 
     
-    public PedidoItem(Float piValor, Integer piQuantidade, Integer idPedido, Integer idItem) {
+    @Column(name = "id_item")
+    private int idItem;
+
+    @Transient
+    private String descItem;
+
+    @Transient
+    private String nomeItem;
+
+
+
+    public PedidoItem(Integer idPedido, Float piValor, Integer piQuantidade, Integer idItem, String descItem, String nomeItem) {
         this.piValor = piValor;
         this.piQuantidade = piQuantidade;
         this.idPedido = idPedido;
         this.idItem = idItem;
+        this.descItem = descItem;
+        this.nomeItem = nomeItem;
     }
 
 

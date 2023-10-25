@@ -43,7 +43,7 @@
         <h2>Detalhes do Pedido</h2>
         <ul>
             <li th:each="item : ${listaPedido}">
-                <span th:text="${item.nomeItem}"></span> - <span th:text="${item.descItem}"></span> - R$ <span th:text="${item.priceItem}"></span>
+                <span th:text="${item.nomeItem}"></span> - <span th:text="${item.descItem}"></span> - qtd <span th:text="${item.piQuantidade}"></span> - R$ <span th:text="${item.piValor}"></span>
             </li>
         </ul>
         <p>Total: R$ <span th:text="${precoTotal}"></span></p>
@@ -53,9 +53,10 @@
         <p>Nome: <span th:text="${nomeCliente}"></span></p>
         <p>Endereço de Entrega Atual: <span th:text="${enderecoCliente}"></span></p>
         <p>Telefone: <span th:text="${telefoneCliente}"></span></p>
+        <p>CPF: <span th:text="${cpfCliente}"></span></p>
         <p><b>Caso deseje alterar o endereço de entrega, preencha o campo abaixo e clique em "Alterar Endereço":</b></p>
     
-        <form method="post" action="/alterarEndereco">
+        <form th:method="post" th:action="@{/confirmacaoPedido/alterarEndereco}">
             <label for="novoEndereco">Digite o novo Endereço de Entrega:</label>
             <input type="text" id="novoEndereco" name="novoEndereco">
             <p></p>
@@ -63,17 +64,19 @@
         </form>
 
     </div>
+    <form th:method="post" th:action="@{/confirmacaoPedido/pedir}">
     <div class="Metodo-Pagamento">
         <h2>Forma de Pagamento</h2>
         <!-- Opções de pagamento aqui, como cartão de crédito, pix/dinheiro, etc. -->
-        <input type="radio" name="payment" value="cartao"> Cartão de Crédito
-        <input type="radio" name="payment" value="dinheiro"> Pix/Dinheiro
+        <input type="radio" name="payment" th:value="cartao"> Cartão de Crédito
+        <input type="radio" name="payment" th:value="dinheiro"> Pix/Dinheiro
         <!-- Adicione mais opções de pagamento conforme necessário -->
     </div>
     <div class="btn-container">
-        <button class="btn">Pagar e Confirmar</button>
-        <button class="btn" style="background-color: #b30000; color: white;">Cancelar Pedido</button>
+        <button class="btn" type="submit">Pagar e Confirmar</button>
+        <button class="btn" onclick="location.href='/cancelamento'" style="background-color: #b30000; color: white;">Cancelar Pedido</button>
     </div>
+</form>
 </body>
 </html>
 

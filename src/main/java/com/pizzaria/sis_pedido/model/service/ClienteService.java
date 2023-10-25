@@ -34,4 +34,13 @@ public class ClienteService {
         Cliente cliente = clienteRepository.findByUsuarioId(idUsuario);
         return cliente;
     }
+
+
+    //metodo usado no botao "alterar endereço na pagina de confirmação de pedido"
+    public void atualizarEndereco(Cliente cliente, String novoEndereco) {
+        cliente.setClienteEnd(novoEndereco);
+        clienteRepository.save(cliente); // Isso atualiza o cliente no banco de dados
+    }
+
+
 }

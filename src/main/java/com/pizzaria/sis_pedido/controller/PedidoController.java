@@ -2,14 +2,11 @@ package com.pizzaria.sis_pedido.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +19,7 @@ import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.service.ClienteService;
 import com.pizzaria.sis_pedido.model.service.ItemService;
 import com.pizzaria.sis_pedido.model.service.PedidoService;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -155,6 +153,59 @@ public class PedidoController {
 
         return "redirect:/pizzaria";
     }
+
+
+
+    @RequestMapping("/confirmacaoPedido")
+    public String ConfirmacaoPedido(HttpSession session) {
+    ModelAndView modelAndView = new ModelAndView("confirmacaoPedido");
+
+    //    ***** ENDEEREÇO DE ENTREGA DO  CLIENTE *****
+
+    Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+    Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
+    
+    String endereco = cliente.getClienteEnd(); // Obtenha o endereço do cliente e salva na varivavel endereco
+
+    modelAndView.addObject("nomeCliente", cliente.getClienteNome());
+    modelAndView.addObject("enderecoCliente", cliente.getClienteEnd());
+    modelAndView.addObject("telefoneCliente", cliente.getClienteTel());
+   
+  
+
+    //        **** LISTA DO PEDIDO *****
+
+    if ((List<Item>) session.getAttribute("listaPedido") != null) {
+        List<Item> listaPedido = (List<Item>) session.getAttribute("listaPedido");
+        float precoTotal = 0.0f;
+
+        for (Item item : listaPedido) {
+            precoTotal += item.getPriceItem();
+        }
+
+        modelAndView.addObject("itensPedido", listaPedido);
+        modelAndView.addObject("precoTotal", precoTotal);
+    }
+
+
+
+    return "confirmacaoPedido";
+    }
+
+    @PostMapping("/alterarEndereco")
+    public String alterarEndereco(@RequestParam("novoEndereco") String novoEndereco, HttpSession session) {
+
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
+    
+        // Atualize o endereço do cliente usando o metodo atualziar endeteço em ClienteService
+        clienteService.atualizarEndereco(cliente, novoEndereco);
+    
+        // Redirecione de volta para a página de confirmação e atualzia o endereço do cliente
+        return "redirect:/confirmacaoPedido";
+    }
+
+
 
 }
 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            background-color: #ffcc00;
+            padding: 20px;
+        }
+        .Detalhes-Pedido {
+            margin: 20px;
+        }
+        .Endereço-Entrega {
+            background-color: #f5f5f5;
+            padding: 10px;
+        }
+        .Metodo-Pagamento {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #4286f4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Pizzaria Louva Deus</h1>
+    </div>
+    <div class="Detalhes-Pedido">
+        <h2>Detalhes do Pedido</h2>
+        <ul>
+            <li th:each="item : ${listaPedido}">
+                <span th:text="${item.nomeItem}"></span> - <span th:text="${item.descItem}"></span> - R$ <span th:text="${item.priceItem}"></span>
+            </li>
+        </ul>
+        <p>Total: R$ <span th:text="${precoTotal}"></span></p>
+    </div>
+    <div class="Endereço-Entrega">
+        <h2>Confirme o Endereço de Entrega</h2>
+        <p>Nome: <span th:text="${nomeCliente}"></span></p>
+        <p>Endereço de Entrega Atual: <span th:text="${enderecoCliente}"></span></p>
+        <p>Telefone: <span th:text="${telefoneCliente}"></span></p>
+        <p><b>Caso deseje alterar o endereço de entrega, preencha o campo abaixo e clique em "Alterar Endereço":</b></p>
+    
+        <form method="post" action="/alterarEndereco">
+            <label for="novoEndereco">Digite o novo Endereço de Entrega:</label>
+            <input type="text" id="novoEndereco" name="novoEndereco">
+            <p></p>
+            <button class="btn" type="submit">Alterar Endereço</button>
+        </form>
+
+    </div>
+    <div class="Metodo-Pagamento">
+        <h2>Forma de Pagamento</h2>
+        <!-- Opções de pagamento aqui, como cartão de crédito, pix/dinheiro, etc. -->
+        <input type="radio" name="payment" value="cartao"> Cartão de Crédito
+        <input type="radio" name="payment" value="dinheiro"> Pix/Dinheiro
+        <!-- Adicione mais opções de pagamento conforme necessário -->
+    </div>
+    <div class="btn-container">
+        <button class="btn">Pagar e Confirmar</button>
+        <button class="btn" style="background-color: #b30000; color: white;">Cancelar Pedido</button>
+    </div>
+</body>
+</html>
+

@@ -1,9 +1,8 @@
 package com.pizzaria.sis_pedido.controller;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,7 @@ public class PedidoController {
     private ItemService itemService;
     @Autowired
     private PedidoService pedidoService;
+ 
 
     private List<Item> listaPedido = new ArrayList<Item>();
 
@@ -52,9 +52,10 @@ public class PedidoController {
 
         if (!listaPedido.isEmpty() && precoTotal == 0.0f) {
             for (Item item : listaPedido) {
-                precoTotal = precoTotal + item.getPriceItem();
+                precoTotal = precoTotal + item.getValorQtd();
             }
         }
+
 
         modelAndView.addObject("registrosP", registrosP);
         modelAndView.addObject("registrosB", registrosB);
@@ -67,14 +68,12 @@ public class PedidoController {
     @PostMapping
     public String adicionarAoPedido(@RequestParam("idItem") Integer idItem, @RequestParam("priceItem") Float priceItem,
             @RequestParam("nomeItem") String nomeItem, @RequestParam("descItem") String descItem,
-            @RequestParam("tipoItem") String tipoItem, HttpSession session) {
-        Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem);
+            @RequestParam("tipoItem") String tipoItem, @RequestParam("Qtd") Integer Qtd, HttpSession session) {
+        Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem, Qtd);
+        item.setValorQtd((Float)(priceItem*Qtd));
         listaPedido.add(item);
         precoTotal = precoTotal + priceItem;
         session.setAttribute("listaPedido", listaPedido);
-
-        System.out.println("Item adicionado ao pedido: " + item.getNomeItem() + " - " + item.getDescItem() + " - "
-                + item.getPriceItem());
 
         return "redirect:/pedido";
     }

@@ -41,6 +41,13 @@ public class LogarController {
         }
     }
 
+    @GetMapping("/deslogar")
+    public String deslogar(HttpSession session) {
+
+        session.invalidate();
+        return "redirect:/pizzaria";
+    }
+
 }
 
     

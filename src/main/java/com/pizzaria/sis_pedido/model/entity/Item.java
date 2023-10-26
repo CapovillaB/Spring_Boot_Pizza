@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,22 @@ public class Item implements Serializable {
     @Column(name = "item_tipo", updatable = false)
     private String tipoItem;
 
+    @Transient
+    private Integer Qtd;
 
+    @Transient
+    private Float valorQtd;
+
+    public Item(Integer idItem, String nomeItem, String descItem, Float priceItem, String tipoItem, Integer Qtd) {
+        this.idItem = idItem;
+        this.nomeItem = nomeItem;
+        this.descItem = descItem;
+        this.priceItem = priceItem;
+        this.tipoItem = tipoItem;
+        this.Qtd = Qtd;
+    }
+
+    
 
     
 

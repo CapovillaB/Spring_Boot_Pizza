@@ -19,6 +19,7 @@
                 <input type="hidden" name=nomeItem th:value="${item.nomeItem}" />
                 <input type="hidden" name=descItem th:value="${item.descItem}" />
                 <input type="hidden" name=tipoItem th:value="${item.tipoItem}" />
+                <input type="number" name="Qtd"/>
                 <button type="submit">Adicionar ao Pedido</button>
             </form>
         </div>
@@ -32,6 +33,7 @@
                 <input type="hidden" name=nomeItem th:value="${item.nomeItem}" />
                 <input type="hidden" name=descItem th:value="${item.descItem}" />
                 <input type="hidden" name=tipoItem th:value="${item.tipoItem}" />
+                <input type="number" name="Qtd"/>
                 <button type="submit">Adicionar ao Pedido</button>
             </form>
         </div>
@@ -43,7 +45,7 @@
         <ul>
             <li th:each="item : ${itensSelecionados}">
                 <form th:action="@{/pedido/removeItem}" method="post">
-                    <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - R$ ' + ${item.priceItem}"></span>
+                    <span th:text="${item.nomeItem} + ' - ' + ${item.descItem} + ' - Qtd: ' + ${item.Qtd} + ' - R$ ' + ${item.valorQtd}"></span>
                     <input type=hidden name=removeItem th:value="${item.nomeItem}"/>
                     <button type="submit">Remover</button>
                 </form>

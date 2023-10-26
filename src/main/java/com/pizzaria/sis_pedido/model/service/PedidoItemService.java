@@ -1,7 +1,6 @@
 package com.pizzaria.sis_pedido.model.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class PedidoItemService {
         for (Item item : listaP) {
             Integer idPedido = pedido.getIdPedido();
             Integer idItem = item.getIdItem();
-            Integer piQuantidade = Collections.frequency(listaP, item);
-            Float piValor = (item.getPriceItem())*piQuantidade;
+            Integer piQuantidade = item.getQtd();
+            Float piValor = item.getValorQtd();
             String nomeItem = item.getNomeItem();
             String descItem =item.getDescItem();
             PedidoItem pedidoItem = new PedidoItem(idPedido, piValor, piQuantidade, idItem, descItem, nomeItem);

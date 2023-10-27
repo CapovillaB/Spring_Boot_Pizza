@@ -70,14 +70,18 @@ public class PedidoController {
     @PostMapping
     public String adicionarAoPedido(@RequestParam("idItem") Integer idItem, @RequestParam("priceItem") Float priceItem,
             @RequestParam("nomeItem") String nomeItem, @RequestParam("descItem") String descItem,
-            @RequestParam("tipoItem") String tipoItem, @RequestParam("Qtd") Integer Qtd, HttpSession session) {
-        Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem, Qtd);
-        item.setValorQtd((Float)(priceItem*Qtd));
-        listaPedido.add(item);
-        //precoTotal = precoTotal + priceItem;
-        precoTotal = precoTotal + (priceItem*Qtd);
-        session.setAttribute("listaPedido", listaPedido);
-
+            @RequestParam("tipoItem") String tipoItem, @RequestParam("Qtd") String quantidade, HttpSession session) {
+                
+        Integer Qtd =  (quantidade != null && !quantidade.isEmpty()) ? Integer.parseInt(quantidade) : 0;
+  
+        if (Qtd > 0) {  // Verifica se a quantidade é maior que zero
+            Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem, Qtd);
+            item.setValorQtd((Float)(priceItem*Qtd));
+            listaPedido.add(item);
+            //precoTotal = precoTotal + priceItem;
+            precoTotal = precoTotal + (priceItem*Qtd);
+            session.setAttribute("listaPedido", listaPedido);
+        }
         return "redirect:/pedido";
     }
 

@@ -74,7 +74,8 @@ public class PedidoController {
         Item item = new Item(idItem, nomeItem, descItem, priceItem, tipoItem, Qtd);
         item.setValorQtd((Float)(priceItem*Qtd));
         listaPedido.add(item);
-        precoTotal = precoTotal + priceItem;
+        //precoTotal = precoTotal + priceItem;
+        precoTotal = precoTotal + (priceItem*Qtd);
         session.setAttribute("listaPedido", listaPedido);
 
         return "redirect:/pedido";
@@ -99,7 +100,8 @@ public class PedidoController {
         }
 
         listaPedido.remove(removerEsse);
-        precoTotal = precoTotal - removerEsse.getValorQtd();
+        //precoTotal = precoTotal - removerEsse.getValorQtd();
+        precoTotal = precoTotal - (removerEsse.getPriceItem() * removerEsse.getQtd());
         session.setAttribute("listaPedido", listaPedido);
 
         return "redirect:/pedido";

@@ -74,9 +74,10 @@
     </div>
     <div class="btn-container">
         <button class="btn" type="submit">Pagar e Confirmar</button>
-        <button class="btn" onclick="location.href='/cancelamento'" style="background-color: #b30000; color: white;">Cancelar Pedido</button>
+               
     </div>
 </form>
+<form class="btn-container" th:action='@{/confirmacaoPedido/cancelamento}' th:method="post"><button class="btn" type="submit" style="background-color: #b30000; color: white;">Cancelar Pedido</button></form>
 </body>
 </html>
 

@@ -159,11 +159,12 @@ public class PedidoController {
         }
     }
 
-    @PostMapping("/cancelarPedido")
+    @GetMapping("/cancelarPedido")
     public String cancelarPedido(HttpSession session) {
 
         List<Item> listaVazia = new ArrayList<Item>();
         session.setAttribute("listaPedido", listaVazia);
+        session.invalidate();
 
         return "redirect:/pizzaria";
     }

@@ -87,12 +87,35 @@ public class DetalhesPedidoController {
     @PostMapping("/pedir")
     public String enviarPedido(HttpSession session, @RequestParam("payment") String payment) {
 
+        if(payment==null){
+            return "redirect:/confirmacaoPedido";
+        }
+        
         Pedido pedido = (Pedido)session.getAttribute("pedido");
         pedido.setPedidoPagamento(payment);
         pedido.setPedidoStatus("Realizado");
 
         pedidoService.salvarPedido(pedido);
         pedidoItemService.salvarListaPI(lista);
+        session.invalidate();
+
+
+
+
+
+        return "redirect:/pizzaria";
+    }
+
+    @PostMapping("/cancelamento")
+    public String cancelamentoPedido(HttpSession session) {
+
+        Pedido pedido = (Pedido)session.getAttribute("pedido");
+        pedido.setPedidoPagamento("Cancelado");
+        pedido.setPedidoStatus("Cancelado");
+
+        pedidoService.salvarPedido(pedido);
+        pedidoItemService.salvarListaPI(lista);
+        session.invalidate();
 
 
 

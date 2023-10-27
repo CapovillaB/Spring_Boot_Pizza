@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pizzaria.sis_pedido.model.entity.Cliente;
+import com.pizzaria.sis_pedido.model.entity.Usuario;
 import com.pizzaria.sis_pedido.model.repository.ClienteRepository;
 
 @Service
@@ -30,8 +31,8 @@ public class ClienteService {
         return clienteRepository.findByClienteCPF(clienteCPF);
     }
 
-    public Cliente buscarClientePorIdUsuario( int idUsuario) {
-        Cliente cliente = clienteRepository.findByUsuarioId(idUsuario);
+    public Cliente buscarClientePorIdUsuario( Usuario Usuario) {
+        Cliente cliente = clienteRepository.findByUsuario(Usuario);
         return cliente;
     }
 

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -27,8 +29,8 @@ public class Cliente implements Serializable {
     @Column(name = "id_cliente")
     private Integer idCliente;
 
-    @Column(name = "id_usuario")
-    private Integer usuarioId;
+    //@Column(name = "id_usuario")
+    //private Integer usuarioId;
 
     @Column(name = "cliente_nome")
     private String clienteNome;
@@ -45,7 +47,8 @@ public class Cliente implements Serializable {
     @Column(name = "cliente_tel")
     private Long clienteTel;
 
-    @Transient
+    @OneToOne
+    @JoinColumn(name ="id_usuario")
     private Usuario usuario;
 
 

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.pizzaria.sis_pedido.model.entity.Cliente;
+import com.pizzaria.sis_pedido.model.entity.Usuario;
+
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
@@ -14,7 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
     Cliente findByClienteCPF(Long clienteCPF);
 
-    Cliente findByUsuarioId(Integer usuarioId);
+    Cliente findByUsuario(Usuario usuario);
     
     Cliente findByIdCliente(Integer idCliente);
 }

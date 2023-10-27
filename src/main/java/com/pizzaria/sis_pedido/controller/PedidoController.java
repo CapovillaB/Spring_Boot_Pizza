@@ -111,7 +111,7 @@ public class PedidoController {
         if(usuario == null){
             return "redirect:/logar";
         }
-        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
+        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario);
         if ((List<Item>) session.getAttribute("listaPedido") != null) {
             listaPedido = (List<Item>) session.getAttribute("listaPedido");
         } else{

@@ -74,7 +74,7 @@ public class DetalhesPedidoController {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         Pedido pedido = (Pedido) session.getAttribute("pedido");
-        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario.getIdUsuario());
+        Cliente cliente = clienteService.buscarClientePorIdUsuario(usuario);
         pedido.getCliente().setClienteEnd(novoEndereco);
         session.setAttribute("pedido", pedido);
         // Atualize o endereço do cliente usando o metodo atualziar endeteço em ClienteService

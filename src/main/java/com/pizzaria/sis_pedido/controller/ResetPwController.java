@@ -37,7 +37,7 @@ public class ResetPwController {
         Cliente oldCliente = clienteService.buscarClientePorCPF(cliente.getClienteCPF());
         Usuario oldUsuario = usuarioService.buscarUsuarioPorNome(cliente.getUsuario().getNomeUsuario());
         
-        if ((cliente.getClienteEmail().equals(oldCliente.getClienteEmail()))&&(oldCliente.getUsuarioId() == oldUsuario.getIdUsuario())) {
+        if ((cliente.getClienteEmail().equals(oldCliente.getClienteEmail()))&&(oldCliente.getUsuario() == oldUsuario)) {
             usuarioService.mudarSenha(cliente.getUsuario().getPswdUsuario(), oldUsuario.getIdUsuario());
             return "redirect:/logar";
         } else {

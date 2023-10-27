@@ -23,6 +23,8 @@ import com.pizzaria.sis_pedido.model.service.PedidoService;
 
 import jakarta.servlet.http.HttpSession;
 
+//corrigir valor total
+
 @Controller
 @RequestMapping("/pedido")
 public class PedidoController {
@@ -97,7 +99,7 @@ public class PedidoController {
         }
 
         listaPedido.remove(removerEsse);
-        precoTotal = precoTotal - removerEsse.getPriceItem();
+        precoTotal = precoTotal - removerEsse.getValorQtd();
         session.setAttribute("listaPedido", listaPedido);
 
         return "redirect:/pedido";
@@ -120,7 +122,7 @@ public class PedidoController {
 
         if (!listaPedido.isEmpty() && precoTotal == 0.0f) {
             for (Item item : listaPedido) {
-                precoTotal = precoTotal + item.getPriceItem();
+                precoTotal = precoTotal + item.getValorQtd();
             }
         }
 
